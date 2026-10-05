@@ -1,6 +1,6 @@
 {
   "lane": "backend_smoke",
-  "generated_at": "05 Oct 2026, 08:15 UTC",
+  "generated_at": "05 Oct 2026, 08:27 UTC",
   "total_cases": 30,
   "passed": 30,
   "failed": 0,
@@ -17,6 +17,25 @@
     "BR-12",
     "BR-13"
   ],
+  "traffic": {
+    "requests": 16,
+    "by_decision": {
+      "Denied": 7,
+      "Invalid": 1,
+      "Allowed": 6,
+      "No match": 2
+    },
+    "chunks_by_role": {
+      "front_desk": {
+        "public": 10,
+        "clinical": 0
+      },
+      "clinician": {
+        "public": 5,
+        "clinical": 4
+      }
+    }
+  },
   "detailed_logs": [
     {
       "area": "Service",

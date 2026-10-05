@@ -1,0 +1,75 @@
+{
+  "generated_at": "2026-10-05T08:26:10+00:00",
+  "verdict": "BLOCKED",
+  "hard_checks": 6,
+  "hard_passed": 0,
+  "lanes": [
+    "adk",
+    "audit",
+    "quality",
+    "rbac",
+    "regression",
+    "security"
+  ],
+  "lanes_reported": [],
+  "rows": [
+    {
+      "lane": "rbac",
+      "metric": "rbac_report.json not found",
+      "value": null,
+      "threshold": "required",
+      "type": "hard",
+      "status": "MISSING",
+      "rules": "BR-1\u20133"
+    },
+    {
+      "lane": "security",
+      "metric": "security_report.json not found",
+      "value": null,
+      "threshold": "required",
+      "type": "hard",
+      "status": "MISSING",
+      "rules": "BR-4\u20139, 11"
+    },
+    {
+      "lane": "adk",
+      "metric": "adk_report.json not found",
+      "value": null,
+      "threshold": "required",
+      "type": "hard",
+      "status": "MISSING",
+      "rules": "BR-5, 12"
+    },
+    {
+      "lane": "quality",
+      "metric": "quality_report.json not found",
+      "value": null,
+      "threshold": "required",
+      "type": "hard",
+      "status": "MISSING",
+      "rules": "BR-10, 12"
+    },
+    {
+      "lane": "audit",
+      "metric": "audit_report.json not found",
+      "value": null,
+      "threshold": "required",
+      "type": "hard",
+      "status": "MISSING",
+      "rules": "BR-13"
+    },
+    {
+      "lane": "regression",
+      "metric": "regression_report.json not found",
+      "value": null,
+      "threshold": "required",
+      "type": "hard",
+      "status": "MISSING",
+      "rules": "BR-15, 16"
+    }
+  ],
+  "drift": {
+    "status": "not run",
+    "alerts": []
+  }
+}

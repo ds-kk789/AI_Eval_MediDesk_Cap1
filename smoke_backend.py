@@ -7,12 +7,12 @@ misbehaving model might make, so the server-side controls are what is tested.
 
     python smoke_backend.py
 
-Writes reports/backend_smoke_report.json and .html. This is a developer
-check of the backend, not one of the eval lanes, and it is not read by
-quality_gate.py.
+Writes reports/backend_smoke_report.json and a dashboard,
+reports/backend_smoke_report.html, which also shows the current release gate
+(quality_gate.evaluate()). This is a developer check of the backend, not one
+of the eval lanes, and the gate does not read it.
 """
 
-import html
 import json
 import sys
 import tempfile
@@ -206,70 +206,38 @@ def run():
 # REPORT
 # ------------------------------------------------------------
 
-HTML = """<!doctype html>
-<html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MediDesk Backend Smoke</title>
-<style>
-:root {{ --bg:#f7f7f5; --panel:#fff; --text:#1d1d1b; --muted:#6b6b66; --line:#e4e4df;
-        --ok:#1f7a4d; --ok-bg:#e3f3ea; --bad:#b42318; --bad-bg:#fde8e6; }}
-@media (prefers-color-scheme: dark) {{ :root:not([data-theme="light"]) {{
-  --bg:#141413; --panel:#1e1e1c; --text:#ecebe6; --muted:#a3a29b; --line:#33332f;
-  --ok:#5cc28d; --ok-bg:#183326; --bad:#f2877d; --bad-bg:#3a1c19; }} }}
-* {{ box-sizing:border-box; }}
-body {{ margin:0; background:var(--bg); color:var(--text); font:15px/1.5 system-ui, -apple-system, Segoe UI, sans-serif; }}
-main {{ max-width:980px; margin:0 auto; padding:32px 16px 48px; }}
-h1 {{ font-size:24px; margin:0 0 4px; }}
-.sub {{ color:var(--muted); margin:0 0 24px; }}
-.summary {{ display:flex; gap:12px; flex-wrap:wrap; margin-bottom:24px; }}
-.tile {{ background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 18px; min-width:150px; }}
-.tile .v {{ font-size:28px; font-weight:600; font-variant-numeric:tabular-nums; }}
-.tile .k {{ color:var(--muted); font-size:13px; }}
-.wrap {{ background:var(--panel); border:1px solid var(--line); border-radius:10px; overflow-x:auto; }}
-table {{ border-collapse:collapse; width:100%; }}
-th, td {{ text-align:left; padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top; }}
-th {{ font-size:12px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:600; }}
-tr:last-child td {{ border-bottom:0; }}
-td.area {{ font-weight:600; white-space:nowrap; }}
-td.rule, td.ev {{ color:var(--muted); font-size:13px; }}
-td.ev {{ font-family:ui-monospace, Consolas, monospace; font-size:12px; word-break:break-word; max-width:320px; }}
-.pill {{ display:inline-block; padding:1px 9px; border-radius:99px; font-size:12px; font-weight:600; }}
-.pass {{ color:var(--ok); background:var(--ok-bg); }} .fail {{ color:var(--bad); background:var(--bad-bg); }}
-.note {{ color:var(--muted); font-size:13px; margin-top:16px; }}
-</style></head><body><main>
-<h1>Backend smoke test</h1>
-<p class="sub">{verdict} · {when} · scripted fake model, no LLM calls</p>
-<div class="summary">
-  <div class="tile"><div class="v">{passed} / {total}</div><div class="k">checks passed</div></div>
-  <div class="tile"><div class="v">{rules}</div><div class="k">business rules covered</div></div>
-  <div class="tile"><div class="v">{chunks}</div><div class="k">chunks in the index ({public} public, {clinical} clinical)</div></div>
-</div>
-<div class="wrap"><table>
-<thead><tr><th>Area</th><th>Check</th><th>Rule</th><th>Result</th><th>Evidence</th></tr></thead>
-<tbody>{rows}</tbody></table></div>
-<p class="note">The real API, ADK runners, tools, FAISS index and audit log run in process; only the model is
-replaced. The fake model also makes calls a misbehaving model might make (searching for a patient from the front
-desk, requesting two patients), so these checks test the server-side controls, not model behaviour. The live Groq
-path is covered by the security, quality and ADK lanes.</p>
-</main></body></html>
-"""
+
+def traffic_stats():
+    """Request and retrieval counts from this run's audit log."""
+    lines = [json.loads(line) for line in config.AUDIT_LOG.read_text(encoding="utf-8").splitlines()]
+    by_decision, chunks_by_role = {}, {}
+
+    for line in lines:
+        by_decision[line["decision"]] = by_decision.get(line["decision"], 0) + 1
+
+        if line["role"]:
+            counts = chunks_by_role.setdefault(line["role"], {"public": 0, "clinical": 0})
+            for chunk_id in line["chunk_ids"]:
+                counts[chunk_id.split("/", 1)[0]] += 1
+
+    return {"requests": len(lines), "by_decision": by_decision, "chunks_by_role": chunks_by_role}
 
 
 def write_report():
-    from medidesk_agent.agent import rag
+    import quality_gate
+    import report_dashboard
 
     passed = sum(r["passed"] for r in results)
     rules = sorted({r["rule"] for r in results if r["rule"] != "-"}, key=lambda x: int(x.split("-")[1]))
-    visibility = [r["visibility"] for r in rag.records]
-    when = datetime.now(timezone.utc).strftime("%d %b %Y, %H:%M UTC")
 
     report = {
         "lane": "backend_smoke",
-        "generated_at": when,
+        "generated_at": datetime.now(timezone.utc).strftime("%d %b %Y, %H:%M UTC"),
         "total_cases": len(results),
         "passed": passed,
         "failed": len(results) - passed,
         "rules_covered": rules,
+        "traffic": traffic_stats(),
         "detailed_logs": results,
     }
     config.REPORTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -277,29 +245,8 @@ def write_report():
         json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8"
     )
 
-    rows = []
-    previous = None
-    for r in results:
-        area = r["area"] if r["area"] != previous else ""
-        previous = r["area"]
-        pill = '<span class="pill pass">Pass</span>' if r["passed"] else '<span class="pill fail">Fail</span>'
-        rows.append(
-            f'<tr><td class="area">{html.escape(area)}</td><td>{html.escape(r["check"])}</td>'
-            f'<td class="rule">{html.escape(r["rule"])}</td><td>{pill}</td>'
-            f'<td class="ev">{html.escape(r["evidence"])}</td></tr>'
-        )
-
-    page = HTML.format(
-        verdict="All checks passed" if passed == len(results) else f"{len(results) - passed} failed",
-        when=when,
-        passed=passed,
-        total=len(results),
-        rules=len(rules),
-        chunks=len(visibility),
-        public=visibility.count(config.PUBLIC),
-        clinical=visibility.count(config.CLINICAL),
-        rows="\n".join(rows),
-    )
+    # The gate is evaluated fresh from whatever lane reports exist now.
+    page = report_dashboard.render(report, quality_gate.evaluate())
     path = config.REPORTS_DIR / "backend_smoke_report.html"
     path.write_text(page, encoding="utf-8")
     return path, passed
