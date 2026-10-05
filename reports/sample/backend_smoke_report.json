@@ -1,0 +1,251 @@
+{
+  "lane": "backend_smoke",
+  "generated_at": "05 Oct 2026, 08:27 UTC",
+  "total_cases": 30,
+  "passed": 30,
+  "failed": 0,
+  "rules_covered": [
+    "BR-1",
+    "BR-2",
+    "BR-3",
+    "BR-5",
+    "BR-6",
+    "BR-7",
+    "BR-9",
+    "BR-10",
+    "BR-11",
+    "BR-12",
+    "BR-13"
+  ],
+  "traffic": {
+    "requests": 16,
+    "by_decision": {
+      "Denied": 7,
+      "Invalid": 1,
+      "Allowed": 6,
+      "No match": 2
+    },
+    "chunks_by_role": {
+      "front_desk": {
+        "public": 10,
+        "clinical": 0
+      },
+      "clinician": {
+        "public": 5,
+        "clinical": 4
+      }
+    }
+  },
+  "detailed_logs": [
+    {
+      "area": "Service",
+      "check": "GET / carries the MediDesk marker",
+      "rule": "-",
+      "passed": true,
+      "evidence": "MediDesk Clinic Assistant is running"
+    },
+    {
+      "area": "Access",
+      "check": "No API key → 401",
+      "rule": "BR-2",
+      "passed": true,
+      "evidence": "401"
+    },
+    {
+      "area": "Access",
+      "check": "Unknown API key → 401",
+      "rule": "BR-2",
+      "passed": true,
+      "evidence": "401"
+    },
+    {
+      "area": "Access",
+      "check": "Front desk on /clinical/ask → 403",
+      "rule": "BR-3",
+      "passed": true,
+      "evidence": "403"
+    },
+    {
+      "area": "Access",
+      "check": "Empty question → 422",
+      "rule": "-",
+      "passed": true,
+      "evidence": "422"
+    },
+    {
+      "area": "Access",
+      "check": "/me: front desk sees public only, one tool",
+      "rule": "BR-1",
+      "passed": true,
+      "evidence": "{'role': 'front_desk', 'visibilities': ['public'], 'endpoints': ['/ask'], 'tools': ['retrieve_clinic_policy']}"
+    },
+    {
+      "area": "Front desk",
+      "check": "Policy question answered (Allowed)",
+      "rule": "BR-12",
+      "passed": true,
+      "evidence": "ANSWER: ## CANCELLATION AND NO-SHOW POLICY\n\nPatients must cancel at least 24 hours before their appointment. Late\ncancel"
+    },
+    {
+      "area": "Front desk",
+      "check": "Policy tool called",
+      "rule": "BR-5",
+      "passed": true,
+      "evidence": "['retrieve_clinic_policy']"
+    },
+    {
+      "area": "Front desk",
+      "check": "Top source is the cancellation section",
+      "rule": "BR-10",
+      "passed": true,
+      "evidence": "['public/cancellation-and-no-show-policy-01', 'public/insurance-and-panel-plans-01', 'public/opening-hours-01', 'public/front-desk-handling-of-record-requests-01', 'public/vaccinations-01']"
+    },
+    {
+      "area": "Front desk",
+      "check": "Every source is PUBLIC",
+      "rule": "BR-5",
+      "passed": true,
+      "evidence": "['public/cancellation-and-no-show-policy-01', 'public/insurance-and-panel-plans-01', 'public/opening-hours-01', 'public/front-desk-handling-of-record-requests-01', 'public/vaccinations-01']"
+    },
+    {
+      "area": "Front desk",
+      "check": "Patient question refused, no tool called (Denied)",
+      "rule": "BR-6",
+      "passed": true,
+      "evidence": "I can't help with patient records from the front desk. Please ask the duty clinician."
+    },
+    {
+      "area": "Front desk",
+      "check": "Model searches for a patient: only PUBLIC chunks come back",
+      "rule": "BR-5",
+      "passed": true,
+      "evidence": "['public/clinic-overview-01', 'public/front-desk-handling-of-record-requests-01', 'public/insurance-and-panel-plans-01', 'public/opening-hours-01', 'public/cancellation-and-no-show-policy-01']"
+    },
+    {
+      "area": "Clinician",
+      "check": "Policy tool stays PUBLIC even for clinicians",
+      "rule": "BR-7",
+      "passed": true,
+      "evidence": "['public/clinic-overview-01', 'public/front-desk-handling-of-record-requests-01', 'public/insurance-and-panel-plans-01', 'public/opening-hours-01', 'public/cancellation-and-no-show-policy-01']"
+    },
+    {
+      "area": "Clinician",
+      "check": "Lookup by ID returns that one record",
+      "rule": "BR-1",
+      "passed": true,
+      "evidence": "['clinical/patient-record-p-1003-01']"
+    },
+    {
+      "area": "Clinician",
+      "check": "Lookup by full name (case and spacing ignored)",
+      "rule": "BR-1",
+      "passed": true,
+      "evidence": "['clinical/patient-record-p-1001-01']"
+    },
+    {
+      "area": "Clinician",
+      "check": "Second patient in one request: whole answer refused",
+      "rule": "BR-7",
+      "passed": true,
+      "evidence": "I can look up one named patient at a time. I can't list or search across patients."
+    },
+    {
+      "area": "Clinician",
+      "check": "Unknown patient → No match",
+      "rule": "BR-10",
+      "passed": true,
+      "evidence": "No match"
+    },
+    {
+      "area": "Patient lookup",
+      "check": "Clinician gets the structured record",
+      "rule": "BR-1",
+      "passed": true,
+      "evidence": "{'patient_id': 'P-1003', 'name': 'Daniel Koh', 'allergies': 'sulfa drugs'}"
+    },
+    {
+      "area": "Patient lookup",
+      "check": "Unknown ID → 404",
+      "rule": "-",
+      "passed": true,
+      "evidence": ""
+    },
+    {
+      "area": "Patient lookup",
+      "check": "Front desk: same 403 for existing and missing patient",
+      "rule": "BR-9",
+      "passed": true,
+      "evidence": "{'detail': 'Forbidden. Patient records are restricted to clinicians.'}"
+    },
+    {
+      "area": "Release health",
+      "check": "GET /release/health responds",
+      "rule": "-",
+      "passed": true,
+      "evidence": ""
+    },
+    {
+      "area": "Audit",
+      "check": "Front desk sees front-desk lines only",
+      "rule": "BR-13",
+      "passed": true,
+      "evidence": "7 lines"
+    },
+    {
+      "area": "Audit",
+      "check": "Front-desk lines never reference a clinical chunk",
+      "rule": "BR-5",
+      "passed": true,
+      "evidence": ""
+    },
+    {
+      "area": "Audit",
+      "check": "Clinician sees all roles, incl. anonymous 401s",
+      "rule": "BR-13",
+      "passed": true,
+      "evidence": "['None', 'clinician', 'front_desk']"
+    },
+    {
+      "area": "Audit",
+      "check": "Refused bulk request still logs what was retrieved",
+      "rule": "BR-13",
+      "passed": true,
+      "evidence": "['clinical/patient-record-p-1001-01']"
+    },
+    {
+      "area": "Audit",
+      "check": "All 16 lines have exactly the required fields",
+      "rule": "BR-13",
+      "passed": true,
+      "evidence": ""
+    },
+    {
+      "area": "Audit",
+      "check": "No question or answer text in the log",
+      "rule": "BR-13",
+      "passed": true,
+      "evidence": ""
+    },
+    {
+      "area": "Audit",
+      "check": "Patient IDs in URLs logged as the route template",
+      "rule": "BR-13",
+      "passed": true,
+      "evidence": ""
+    },
+    {
+      "area": "Audit",
+      "check": "401 and 422 rejections are logged",
+      "rule": "BR-13",
+      "passed": true,
+      "evidence": ""
+    },
+    {
+      "area": "Decision",
+      "check": "Curly apostrophe still classified (Referred)",
+      "rule": "BR-11",
+      "passed": true,
+      "evidence": ""
+    }
+  ]
+}

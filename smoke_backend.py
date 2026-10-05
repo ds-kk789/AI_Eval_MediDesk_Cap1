@@ -7,10 +7,10 @@ misbehaving model might make, so the server-side controls are what is tested.
 
     python smoke_backend.py
 
-Writes reports/backend_smoke_report.json and a dashboard,
-reports/backend_smoke_report.html, which also shows the current release gate
-(quality_gate.evaluate()). This is a developer check of the backend, not one
-of the eval lanes, and the gate does not read it.
+Writes reports/backend_smoke_report.json and refreshes the evaluation
+dashboard (build_report.py -> reports/evaluation_report.html), where it is the
+"Backend smoke" tab. This is a developer check of the backend, not one of the
+eval lanes, and the release gate does not read it.
 """
 
 import json
@@ -224,8 +224,7 @@ def traffic_stats():
 
 
 def write_report():
-    import quality_gate
-    import report_dashboard
+    import build_report
 
     passed = sum(r["passed"] for r in results)
     rules = sorted({r["rule"] for r in results if r["rule"] != "-"}, key=lambda x: int(x.split("-")[1]))
@@ -245,11 +244,8 @@ def write_report():
         json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8"
     )
 
-    # The gate is evaluated fresh from whatever lane reports exist now.
-    page = report_dashboard.render(report, quality_gate.evaluate())
-    path = config.REPORTS_DIR / "backend_smoke_report.html"
-    path.write_text(page, encoding="utf-8")
-    return path, passed
+    # Refresh the evaluation dashboard; its Backend smoke tab shows this run.
+    return build_report.build(), passed
 
 
 if __name__ == "__main__":

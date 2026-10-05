@@ -13,7 +13,8 @@ table (BR-14).
 Writes reports/gate_report.json (read by the dashboards) and prints a
 LANE / METRIC / VALUE / THRESHOLD / STATUS table.
 
-Report contracts (what each lane must write):
+Report contracts (what each lane must write; reports/sample/ holds a full
+example of every one, and reports/sample/README.md lists the per-case fields):
     rbac_report.json        conftest lane report; `failed` = wrong status codes
     security_report.json    detailed_logs[*].leaked (bool) and
                             detailed_logs[*].restricted_chunks (int)
@@ -40,8 +41,8 @@ REPORTS = config.REPORTS_DIR
 PASS, FAIL, WARN, MISSING = "PASS", "FAIL", "WARN", "MISSING"
 
 
-def _load(name):
-    path = REPORTS / name
+def _load(name, reports_dir=None):
+    path = (reports_dir or REPORTS) / name
 
     if not path.exists():
         return None
@@ -55,8 +56,12 @@ def _load(name):
 
 class Gate:
 
-    def __init__(self):
+    def __init__(self, reports_dir=None):
         self.rows = []
+        self.reports_dir = reports_dir
+
+    def load(self, name):
+        return _load(name, self.reports_dir)
 
     def check(self, lane, metric, value, threshold, comparison=">=", hard=True, rules=""):
         if value is None:
@@ -101,7 +106,7 @@ class Gate:
 
 
 def check_rbac(gate):
-    report = _load("rbac_report.json")
+    report = gate.load("rbac_report.json")
 
     if report is None:
         return gate.missing("rbac", "rbac_report.json", "BR-1–3")
@@ -112,7 +117,7 @@ def check_rbac(gate):
 
 
 def check_security(gate):
-    report = _load("security_report.json")
+    report = gate.load("security_report.json")
 
     if report is None:
         return gate.missing("security", "security_report.json", "BR-4–9, 11")
@@ -126,7 +131,7 @@ def check_security(gate):
 
 
 def check_adk(gate):
-    report = _load("adk_report.json")
+    report = gate.load("adk_report.json")
 
     if report is None:
         return gate.missing("adk", "adk_report.json", "BR-5, 12")
@@ -149,7 +154,7 @@ def check_adk(gate):
 
 
 def check_quality(gate):
-    report = _load("quality_report.json")
+    report = gate.load("quality_report.json")
 
     if report is None:
         return gate.missing("quality", "quality_report.json", "BR-10, 12")
@@ -162,7 +167,7 @@ def check_quality(gate):
 
 
 def check_audit(gate):
-    report = _load("audit_report.json")
+    report = gate.load("audit_report.json")
 
     if report is None:
         return gate.missing("audit", "audit_report.json", "BR-13")
@@ -173,7 +178,7 @@ def check_audit(gate):
 
 
 def check_regression(gate):
-    report = _load("regression_report.json")
+    report = gate.load("regression_report.json")
 
     if report is None:
         return gate.missing("regression", "regression_report.json", "BR-15, 16")
@@ -192,9 +197,9 @@ def check_regression(gate):
     )
 
 
-def drift_warnings():
+def drift_warnings(reports_dir=None):
     """Drift alerts, shown beside the gate but never part of its verdict."""
-    report = _load("drift_report.json")
+    report = _load("drift_report.json", reports_dir)
 
     if report is None:
         return {"status": "not run", "alerts": []}
@@ -208,8 +213,9 @@ def drift_warnings():
 # ------------------------------------------------------------
 
 
-def evaluate():
-    gate = Gate()
+def evaluate(reports_dir=None):
+    """The gate over one reports folder (default reports/)."""
+    gate = Gate(reports_dir)
 
     for check in (check_rbac, check_security, check_adk, check_quality, check_audit, check_regression):
         check(gate)
@@ -226,7 +232,7 @@ def evaluate():
         "lanes": lanes,
         "lanes_reported": reported,
         "rows": gate.rows,
-        "drift": drift_warnings(),
+        "drift": drift_warnings(reports_dir),
     }
 
 

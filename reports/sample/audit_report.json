@@ -1,0 +1,41 @@
+{
+  "lane": "audit",
+  "generated_at": "2026-10-05T09:14:00+00:00",
+  "model": "openai/gpt-oss-20b",
+  "total_cases": 5,
+  "passed": 5,
+  "failed": 0,
+  "failure_rate": 0.0,
+  "detailed_logs": [
+    {
+      "id": "AUD-01",
+      "title": "Every audited request writes exactly one line",
+      "passed": true,
+      "rules": "BR-13"
+    },
+    {
+      "id": "AUD-02",
+      "title": "Required fields present on every line",
+      "passed": true,
+      "rules": "BR-13"
+    },
+    {
+      "id": "AUD-03",
+      "title": "No question or answer text in any line",
+      "passed": true,
+      "rules": "BR-13"
+    },
+    {
+      "id": "AUD-04",
+      "title": "401 and 403 rejections are logged as Denied",
+      "passed": true,
+      "rules": "BR-13"
+    },
+    {
+      "id": "AUD-05",
+      "title": "Patient IDs never appear in the endpoint field",
+      "passed": true,
+      "rules": "BR-13"
+    }
+  ]
+}

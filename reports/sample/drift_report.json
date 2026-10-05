@@ -1,0 +1,139 @@
+{
+  "generated_at": "2026-10-05T09:14:00+00:00",
+  "windows": {
+    "reference": 100,
+    "control": 100,
+    "current": 100
+  },
+  "topic_mix": {
+    "topics": [
+      "Opening hours",
+      "Insurance",
+      "Cancellations",
+      "Vaccinations",
+      "Clinical lookups",
+      "Telehealth (not covered)"
+    ],
+    "reference": [
+      32,
+      24,
+      16,
+      8,
+      20,
+      0
+    ],
+    "control": [
+      30,
+      26,
+      17,
+      7,
+      20,
+      0
+    ],
+    "current": [
+      18,
+      14,
+      10,
+      22,
+      18,
+      18
+    ],
+    "unit": "% of queries"
+  },
+  "signals": [
+    {
+      "type": "input",
+      "feature": "Topic mix",
+      "method": "PSI",
+      "control": 0.005,
+      "current": 2.484,
+      "threshold": 0.25,
+      "status": "alert",
+      "control_status": "stable"
+    },
+    {
+      "type": "input",
+      "feature": "Topic mix",
+      "method": "JS",
+      "control": 0.001,
+      "current": 0.144,
+      "threshold": 0.1,
+      "status": "alert",
+      "control_status": "stable"
+    },
+    {
+      "type": "input",
+      "feature": "Query length",
+      "method": "PSI",
+      "control": 0.02,
+      "current": 0.31,
+      "threshold": 0.25,
+      "status": "alert",
+      "control_status": "stable"
+    },
+    {
+      "type": "input",
+      "feature": "Clinical share of queries",
+      "method": "PSI",
+      "control": 0.01,
+      "current": 0.04,
+      "threshold": 0.25,
+      "status": "stable",
+      "control_status": "stable"
+    },
+    {
+      "type": "output",
+      "feature": "Answer length",
+      "method": "PSI",
+      "control": 0.03,
+      "current": 0.12,
+      "threshold": 0.25,
+      "status": "moderate",
+      "control_status": "stable"
+    },
+    {
+      "type": "output",
+      "feature": "Refusal rate",
+      "method": "PSI",
+      "control": 0.02,
+      "current": 0.08,
+      "threshold": 0.25,
+      "status": "stable",
+      "control_status": "stable"
+    },
+    {
+      "type": "output",
+      "feature": "Top-1 retrieval similarity",
+      "method": "PSI",
+      "control": 0.04,
+      "current": 0.41,
+      "threshold": 0.25,
+      "status": "alert",
+      "control_status": "stable"
+    },
+    {
+      "type": "concept",
+      "feature": "Out-of-coverage rate (top-1 < 0.40)",
+      "method": "Rate change",
+      "control": 0.01,
+      "current": 0.18,
+      "threshold": 0.1,
+      "reference": 0.01,
+      "status": "alert",
+      "control_status": "stable"
+    }
+  ],
+  "alerts": [
+    "Input drift: Topic mix PSI 2.484 (alert at 0.25)",
+    "Input drift: Topic mix JS 0.144 (alert at 0.1)",
+    "Input drift: Query length PSI 0.31 (alert at 0.25)",
+    "Output drift: Top-1 retrieval similarity PSI 0.41 (alert at 0.25)",
+    "Concept drift: Out-of-coverage rate (top-1 < 0.40) Rate change 0.18 (alert at 0.1)"
+  ],
+  "kl_reference_current": 0.329,
+  "embedding_centroid_distance": {
+    "control": 0.02,
+    "current": 0.19
+  },
+  "recommendation": "Telehealth is 18% of current queries and not in knowledge.txt: add a telehealth policy section, then rerun the regression check."
+}

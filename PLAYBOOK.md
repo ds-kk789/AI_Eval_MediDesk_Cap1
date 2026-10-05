@@ -25,8 +25,8 @@ uvicorn backend.main:app --port 8003
 The index also rebuilds itself on startup whenever `knowledge.txt` or the
 chunk settings change.
 
-To check the backend without spending LLM budget (fake model, writes
-`reports/backend_smoke_report.html`):
+To check the backend without spending LLM budget (fake model; results show
+in the dashboard's Backend smoke tab):
 
 ```bash
 python smoke_backend.py
@@ -68,7 +68,12 @@ python drift_check.py
 python build_report.py
 ```
 
-Opens as `reports/evaluation_report.html`.
+Writes `reports/evaluation_report.html`, the evaluation dashboard: release
+verdict, a severity-ranked "Needs attention" list, a tab per lane with charts
+and a case drawer, and business-rule coverage. It reads the same reports as
+`quality_gate.py`, so the two never disagree. `smoke_backend.py` rebuilds it
+too. The "Sample preview" toggle shows `reports/sample/` (hand-made, labelled
+on every view) so the layout can be judged before the lanes run.
 
 ## Budget order
 
