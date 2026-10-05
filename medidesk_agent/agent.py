@@ -168,17 +168,22 @@ def _gemini_is_usable():
 
 
 def _groq_model():
-    """LiteLLM-backed Groq model with a Groq-specific compatibility fix.
+    """LiteLLM-backed Groq model with two Groq-specific fixes.
 
-    gpt-oss returns `reasoning_content` on assistant messages. On the second
-    turn of a tool-calling conversation LiteLLM echoes it back and Groq
-    rejects it (400: property 'reasoning_content' is unsupported), so it is
-    stripped on the way out.
+    1. gpt-oss returns `reasoning_content` on assistant messages. On the second
+       turn of a tool-calling conversation LiteLLM echoes it back and Groq
+       rejects it (400: property 'reasoning_content' is unsupported), so it is
+       stripped on the way out.
+    2. Key failover. LiteLLM sends whatever key it was given, so on its own a
+       daily-quota 429 on GROQ_API_KEY would fail every request until restart.
+       Each call instead uses the shared pool's active key, and a daily-quota
+       429 rotates the pool to GROQ_API_KEY_2 and retries once.
     """
     from google.adk.models.lite_llm import LiteLlm, LiteLLMClient
+    from litellm.exceptions import RateLimitError
 
     # Imported here: backend.llm raises at import when no Groq key is set.
-    from backend.llm import groq
+    from backend.llm import _daily_quota_exhausted, groq
 
     def _strip_reasoning(messages):
         if not isinstance(messages, list):
@@ -194,17 +199,33 @@ def _groq_model():
     class GroqCompatibleClient(LiteLLMClient):
 
         async def acompletion(self, model, messages, tools, **kwargs):
-            return await super().acompletion(
-                model=model, messages=_strip_reasoning(messages), tools=tools, **kwargs
-            )
+            messages = _strip_reasoning(messages)
+            while True:
+                kwargs["api_key"] = groq.active_key
+                try:
+                    return await super().acompletion(
+                        model=model, messages=messages, tools=tools, **kwargs
+                    )
+                except RateLimitError as error:
+                    if _daily_quota_exhausted(error) and groq.rotate("daily quota"):
+                        continue
+                    raise
 
         def completion(self, model, messages, tools, **kwargs):
-            return super().completion(
-                model=model, messages=_strip_reasoning(messages), tools=tools, **kwargs
-            )
+            messages = _strip_reasoning(messages)
+            while True:
+                kwargs["api_key"] = groq.active_key
+                try:
+                    return super().completion(
+                        model=model, messages=messages, tools=tools, **kwargs
+                    )
+                except RateLimitError as error:
+                    if _daily_quota_exhausted(error) and groq.rotate("daily quota"):
+                        continue
+                    raise
 
-    # LiteLLM reads the key itself, so it can't fail over mid-run. Probe once
-    # and hand it whichever key still has daily budget.
+    # Start on whichever key still has daily budget (one ~10-token probe per
+    # exhausted key); later exhaustion is handled per call above.
     api_key = groq.probe_key()
     print(f"[medidesk_agent] Groq via LiteLLM using {groq.active_label}")
 
