@@ -6,10 +6,10 @@ project it is modelled on, the interesting part is not the chatbot. It is the
 evaluation harness that proves the front desk never sees patient data, and
 the gate that blocks a release when that proof fails.
 
-> **Status: proposal stage.** The structure, config, datasets and knowledge
-> base are in place. Most modules are stubs that name the file to port from
-> `AI_Eval_Module_4_3_Steps`. Implementation starts once the proposal is
-> accepted.
+> **Status: backend implemented.** `backend/` and `medidesk_agent/` are
+> built (FastAPI, auth, RAG, audit, per-role ADK agent). The web app and the
+> eval lanes are still stubs that name the file to port from
+> `AI_Eval_Module_4_3_Steps`.
 
 **Problem statement:** How do we let an AI assistant help clinic staff
 without it ever leaking patient records, and prove that before it ships?
@@ -50,6 +50,33 @@ audit log (role, endpoint, tools, chunks, decision; never answer text)
 Eval lanes ──► reports/*.json ──► regression_check.py ──► quality_gate.py
 drift_check.py runs beside the pipeline: alerts only, never blocks.
 ```
+
+## API
+
+| Route | Who | What |
+|---|---|---|
+| `GET /` | anyone | Health check; `message` contains "MediDesk" (conftest checks it) |
+| `GET /me` | any valid key | Role, visibilities, endpoints and tools for that key |
+| `POST /ask` | any valid key | Runs the caller's role agent |
+| `POST /clinical/ask` | clinician (403 otherwise) | Same, with the patient-record tool |
+| `GET /clinical/patients/{id}` | clinician (403 otherwise) | Exact record lookup by ID or full name, no LLM; 404 if none |
+| `GET /audit` | any valid key | Recent audit lines; front desk sees front-desk lines only |
+| `GET /release/health` | any valid key | Summaries of `reports/*_report.json` (no per-case logs) |
+
+`/ask` and `/clinical/ask` return `answer`, `decision` (Allowed, Denied,
+Referred, No match), `refused`, `tools_called`, `sources` (id, section,
+visibility, score, text), `retrieved_context` and `request_id`.
+
+Enforcement beyond the 401/403:
+
+- The policy tool searches PUBLIC chunks only, for every role, so a policy
+  search can't sweep patient records.
+- The patient tool is an exact lookup capped at one patient per request. Asking
+  for a second patient replaces the whole answer with the bulk refusal (BR-7).
+- Tools write retrieved chunk ids to ADK session state, not into the model's
+  context; the API reads them back for `sources` and the audit line.
+- The model is chosen on the first question, so the API starts and answers
+  401/403 without any LLM key (the CI offline lanes rely on this).
 
 ## Who uses what
 

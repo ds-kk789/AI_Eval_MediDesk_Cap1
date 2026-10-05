@@ -15,11 +15,25 @@ copy .env.example .env
 
 Fill `GROQ_API_KEY` (and `GROQ_API_KEY_2` for failover) in `.env`.
 
-## 1. Build the index
+## 1. Build the index and start the API
 
 ```bash
 python -m backend.rag_pipeline
+uvicorn backend.main:app --port 8003
 ```
+
+The index also rebuilds itself on startup whenever `knowledge.txt` or the
+chunk settings change.
+
+To check the backend without spending LLM budget (fake model, writes
+`reports/backend_smoke_report.html`):
+
+```bash
+python smoke_backend.py
+```
+
+The test lanes start uvicorn themselves if nothing is
+listening on 8003.
 
 ## 2. Run v1 and freeze the baseline
 
@@ -33,8 +47,8 @@ python regression_check.py --promote
 
 ## 3. Make the v2 change and check for regressions
 
-In `backend/config.py` set `CHUNK_SIZE = 300` and `TOP_K = 2`, rebuild the
-index, rerun the lanes, then:
+In `backend/config.py` set `CHUNK_SIZE = 300` and `TOP_K = 2` (the index
+rebuilds on next start), rerun the lanes, then:
 
 ```bash
 python regression_check.py

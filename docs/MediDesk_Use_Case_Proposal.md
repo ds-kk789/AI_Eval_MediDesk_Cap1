@@ -91,6 +91,28 @@ FastAPI resolves the role before any model runs, then hands the question to an A
 
 Because the pytest lanes call FastAPI and `adk eval` calls the same agent, both lanes test the real request path. In the earlier HR project the two ran side by side without this connection; MediDesk wires them together.
 
+### API endpoints
+
+Seven routes serve the web app; every route except `GET /` needs an API key, and every `/ask` and `/clinical/` request is audit-logged, including 401 and 403 rejections.
+
+| Route | Who | What it returns |
+| --- | --- | --- |
+| `GET /` | Anyone | Health check with the "MediDesk" marker the test lanes look for |
+| `GET /me` | Any valid key | The caller's role, visibilities, endpoints and tools |
+| `POST /ask` | Any valid key | Answer from the caller's role agent |
+| `POST /clinical/ask` | Clinician (403 otherwise) | Same, with the patient-record tool |
+| `GET /clinical/patients/{id}` | Clinician (403 otherwise) | One record by exact ID or full name, no LLM call; 404 if none |
+| `GET /audit` | Any valid key | Recent audit lines; front desk sees front-desk lines only |
+| `GET /release/health` | Any valid key | Summaries of the lane, regression and drift reports, without per-case logs |
+
+Both ask routes return the answer, a decision (Allowed, Denied, Referred or No match) worked out without a model, the tools called and the sources with their visibility and score.
+
+Three controls go beyond the 401/403 checks:
+
+- The policy tool searches PUBLIC chunks only, for every role, so a policy search can't sweep patient records (BR-7).
+- The patient tool is an exact lookup capped at one patient per request; asking for a second replaces the whole answer with the bulk refusal (BR-7).
+- The front desk gets the same 403 for a patient that exists and one that doesn't (BR-9).
+
 ## Business rules
 
 There are 17 rules, and each is enforced by at least one automated test.

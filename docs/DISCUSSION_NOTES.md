@@ -289,8 +289,16 @@ API keys, roles or audit log.
   in CI with no LLM calls. The security lane's answer checks call the model,
   so it now says RBAC, retrieval-boundary and audit run on every push, and
   security, ADK and quality run on demand.
-- **Unverified APIs:** the ADK and MCP sketches were not run. `mcp` is not
-  in `requirements.txt` yet.
+- **Unverified APIs:** the MCP sketch was not run, and `mcp` is not in
+  `requirements.txt` yet. The ADK wiring in section 8 is now implemented in
+  `backend/main.py` and checked against `google-adk==2.9.1` with a scripted
+  fake model; the live Groq path has not been run yet.
+- **Changed from the section 8 sketch (5 Oct 2026):** the policy tool searches
+  PUBLIC chunks only for every role; the patient tool is an exact lookup by ID
+  or full name, capped at one patient per request; tools pass chunk ids through
+  ADK session state, not the model; `root_agent` is built lazily so the API
+  starts without LLM keys. Added `GET /me`, `GET /clinical/patients/{id}`,
+  `GET /audit` and `GET /release/health` for the web app.
 - **Thresholds:** the drift alert levels (PSI ≥ 0.25, JS ≥ 0.1, similarity
   0.4) are starting points to check against the control window, not
   standards.

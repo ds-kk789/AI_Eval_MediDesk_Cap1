@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MediDesk Backend Smoke</title>
+<style>
+:root { --bg:#f7f7f5; --panel:#fff; --text:#1d1d1b; --muted:#6b6b66; --line:#e4e4df;
+        --ok:#1f7a4d; --ok-bg:#e3f3ea; --bad:#b42318; --bad-bg:#fde8e6; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg:#141413; --panel:#1e1e1c; --text:#ecebe6; --muted:#a3a29b; --line:#33332f;
+  --ok:#5cc28d; --ok-bg:#183326; --bad:#f2877d; --bad-bg:#3a1c19; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--text); font:15px/1.5 system-ui, -apple-system, Segoe UI, sans-serif; }
+main { max-width:980px; margin:0 auto; padding:32px 16px 48px; }
+h1 { font-size:24px; margin:0 0 4px; }
+.sub { color:var(--muted); margin:0 0 24px; }
+.summary { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:24px; }
+.tile { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 18px; min-width:150px; }
+.tile .v { font-size:28px; font-weight:600; font-variant-numeric:tabular-nums; }
+.tile .k { color:var(--muted); font-size:13px; }
+.wrap { background:var(--panel); border:1px solid var(--line); border-radius:10px; overflow-x:auto; }
+table { border-collapse:collapse; width:100%; }
+th, td { text-align:left; padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top; }
+th { font-size:12px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:600; }
+tr:last-child td { border-bottom:0; }
+td.area { font-weight:600; white-space:nowrap; }
+td.rule, td.ev { color:var(--muted); font-size:13px; }
+td.ev { font-family:ui-monospace, Consolas, monospace; font-size:12px; word-break:break-word; max-width:320px; }
+.pill { display:inline-block; padding:1px 9px; border-radius:99px; font-size:12px; font-weight:600; }
+.pass { color:var(--ok); background:var(--ok-bg); } .fail { color:var(--bad); background:var(--bad-bg); }
+.note { color:var(--muted); font-size:13px; margin-top:16px; }
+</style></head><body><main>
+<h1>Backend smoke test</h1>
+<p class="sub">All checks passed · 05 Oct 2026, 08:15 UTC · scripted fake model, no LLM calls</p>
+<div class="summary">
+  <div class="tile"><div class="v">30 / 30</div><div class="k">checks passed</div></div>
+  <div class="tile"><div class="v">11</div><div class="k">business rules covered</div></div>
+  <div class="tile"><div class="v">9</div><div class="k">chunks in the index (6 public, 3 clinical)</div></div>
+</div>
+<div class="wrap"><table>
+<thead><tr><th>Area</th><th>Check</th><th>Rule</th><th>Result</th><th>Evidence</th></tr></thead>
+<tbody><tr><td class="area">Service</td><td>GET / carries the MediDesk marker</td><td class="rule">-</td><td><span class="pill pass">Pass</span></td><td class="ev">MediDesk Clinic Assistant is running</td></tr>
+<tr><td class="area">Access</td><td>No API key → 401</td><td class="rule">BR-2</td><td><span class="pill pass">Pass</span></td><td class="ev">401</td></tr>
+<tr><td class="area"></td><td>Unknown API key → 401</td><td class="rule">BR-2</td><td><span class="pill pass">Pass</span></td><td class="ev">401</td></tr>
+<tr><td class="area"></td><td>Front desk on /clinical/ask → 403</td><td class="rule">BR-3</td><td><span class="pill pass">Pass</span></td><td class="ev">403</td></tr>
+<tr><td class="area"></td><td>Empty question → 422</td><td class="rule">-</td><td><span class="pill pass">Pass</span></td><td class="ev">422</td></tr>
+<tr><td class="area"></td><td>/me: front desk sees public only, one tool</td><td class="rule">BR-1</td><td><span class="pill pass">Pass</span></td><td class="ev">{&#x27;role&#x27;: &#x27;front_desk&#x27;, &#x27;visibilities&#x27;: [&#x27;public&#x27;], &#x27;endpoints&#x27;: [&#x27;/ask&#x27;], &#x27;tools&#x27;: [&#x27;retrieve_clinic_policy&#x27;]}</td></tr>
+<tr><td class="area">Front desk</td><td>Policy question answered (Allowed)</td><td class="rule">BR-12</td><td><span class="pill pass">Pass</span></td><td class="ev">ANSWER: ## CANCELLATION AND NO-SHOW POLICY
+
+Patients must cancel at least 24 hours before their appointment. Late
+cancel</td></tr>
+<tr><td class="area"></td><td>Policy tool called</td><td class="rule">BR-5</td><td><span class="pill pass">Pass</span></td><td class="ev">[&#x27;retrieve_clinic_policy&#x27;]</td></tr>
+<tr><td class="area"></td><td>Top source is the cancellation section</td><td class="rule">BR-10</td><td><span class="pill pass">Pass</span></td><td class="ev">[&#x27;public/cancellation-and-no-show-policy-01&#x27;, &#x27;public/insurance-and-panel-plans-01&#x27;, &#x27;public/opening-hours-01&#x27;, &#x27;public/front-desk-handling-of-record-requests-01&#x27;, &#x27;public/vaccinations-01&#x27;]</td></tr>
+<tr><td class="area"></td><td>Every source is PUBLIC</td><td class="rule">BR-5</td><td><span class="pill pass">Pass</span></td><td class="ev">[&#x27;public/cancellation-and-no-show-policy-01&#x27;, &#x27;public/insurance-and-panel-plans-01&#x27;, &#x27;public/opening-hours-01&#x27;, &#x27;public/front-desk-handling-of-record-requests-01&#x27;, &#x27;public/vaccinations-01&#x27;]</td></tr>
+<tr><td class="area"></td><td>Patient question refused, no tool called (Denied)</td><td class="rule">BR-6</td><td><span class="pill pass">Pass</span></td><td class="ev">I can&#x27;t help with patient records from the front desk. Please ask the duty clinician.</td></tr>
+<tr><td class="area"></td><td>Model searches for a patient: only PUBLIC chunks come back</td><td class="rule">BR-5</td><td><span class="pill pass">Pass</span></td><td class="ev">[&#x27;public/clinic-overview-01&#x27;, &#x27;public/front-desk-handling-of-record-requests-01&#x27;, &#x27;public/insurance-and-panel-plans-01&#x27;, &#x27;public/opening-hours-01&#x27;, &#x27;public/cancellation-and-no-show-policy-01&#x27;]</td></tr>
+<tr><td class="area">Clinician</td><td>Policy tool stays PUBLIC even for clinicians</td><td class="rule">BR-7</td><td><span class="pill pass">Pass</span></td><td class="ev">[&#x27;public/clinic-overview-01&#x27;, &#x27;public/front-desk-handling-of-record-requests-01&#x27;, &#x27;public/insurance-and-panel-plans-01&#x27;, &#x27;public/opening-hours-01&#x27;, &#x27;public/cancellation-and-no-show-policy-01&#x27;]</td></tr>
+<tr><td class="area"></td><td>Lookup by ID returns that one record</td><td class="rule">BR-1</td><td><span class="pill pass">Pass</span></td><td class="ev">[&#x27;clinical/patient-record-p-1003-01&#x27;]</td></tr>
+<tr><td class="area"></td><td>Lookup by full name (case and spacing ignored)</td><td class="rule">BR-1</td><td><span class="pill pass">Pass</span></td><td class="ev">[&#x27;clinical/patient-record-p-1001-01&#x27;]</td></tr>
+<tr><td class="area"></td><td>Second patient in one request: whole answer refused</td><td class="rule">BR-7</td><td><span class="pill pass">Pass</span></td><td class="ev">I can look up one named patient at a time. I can&#x27;t list or search across patients.</td></tr>
+<tr><td class="area"></td><td>Unknown patient → No match</td><td class="rule">BR-10</td><td><span class="pill pass">Pass</span></td><td class="ev">No match</td></tr>
+<tr><td class="area">Patient lookup</td><td>Clinician gets the structured record</td><td class="rule">BR-1</td><td><span class="pill pass">Pass</span></td><td class="ev">{&#x27;patient_id&#x27;: &#x27;P-1003&#x27;, &#x27;name&#x27;: &#x27;Daniel Koh&#x27;, &#x27;allergies&#x27;: &#x27;sulfa drugs&#x27;}</td></tr>
+<tr><td class="area"></td><td>Unknown ID → 404</td><td class="rule">-</td><td><span class="pill pass">Pass</span></td><td class="ev"></td></tr>
+<tr><td class="area"></td><td>Front desk: same 403 for existing and missing patient</td><td class="rule">BR-9</td><td><span class="pill pass">Pass</span></td><td class="ev">{&#x27;detail&#x27;: &#x27;Forbidden. Patient records are restricted to clinicians.&#x27;}</td></tr>
+<tr><td class="area">Release health</td><td>GET /release/health responds</td><td class="rule">-</td><td><span class="pill pass">Pass</span></td><td class="ev"></td></tr>
+<tr><td class="area">Audit</td><td>Front desk sees front-desk lines only</td><td class="rule">BR-13</td><td><span class="pill pass">Pass</span></td><td class="ev">7 lines</td></tr>
+<tr><td class="area"></td><td>Front-desk lines never reference a clinical chunk</td><td class="rule">BR-5</td><td><span class="pill pass">Pass</span></td><td class="ev"></td></tr>
+<tr><td class="area"></td><td>Clinician sees all roles, incl. anonymous 401s</td><td class="rule">BR-13</td><td><span class="pill pass">Pass</span></td><td class="ev">[&#x27;None&#x27;, &#x27;clinician&#x27;, &#x27;front_desk&#x27;]</td></tr>
+<tr><td class="area"></td><td>Refused bulk request still logs what was retrieved</td><td class="rule">BR-13</td><td><span class="pill pass">Pass</span></td><td class="ev">[&#x27;clinical/patient-record-p-1001-01&#x27;]</td></tr>
+<tr><td class="area"></td><td>All 16 lines have exactly the required fields</td><td class="rule">BR-13</td><td><span class="pill pass">Pass</span></td><td class="ev"></td></tr>
+<tr><td class="area"></td><td>No question or answer text in the log</td><td class="rule">BR-13</td><td><span class="pill pass">Pass</span></td><td class="ev"></td></tr>
+<tr><td class="area"></td><td>Patient IDs in URLs logged as the route template</td><td class="rule">BR-13</td><td><span class="pill pass">Pass</span></td><td class="ev"></td></tr>
+<tr><td class="area"></td><td>401 and 422 rejections are logged</td><td class="rule">BR-13</td><td><span class="pill pass">Pass</span></td><td class="ev"></td></tr>
+<tr><td class="area">Decision</td><td>Curly apostrophe still classified (Referred)</td><td class="rule">BR-11</td><td><span class="pill pass">Pass</span></td><td class="ev"></td></tr></tbody></table></div>
+<p class="note">The real API, ADK runners, tools, FAISS index and audit log run in process; only the model is
+replaced. The fake model also makes calls a misbehaving model might make (searching for a patient from the front
+desk, requesting two patients), so these checks test the server-side controls, not model behaviour. The live Groq
+path is covered by the security, quality and ADK lanes.</p>
+</main></body></html>
