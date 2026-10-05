@@ -1,0 +1,47 @@
+# Offline gate: lanes that need no LLM calls run on every push.
+# The security, ADK and quality lanes call the model, so they run on demand
+# (workflow_dispatch) with GROQ_API_KEY set as a repository secret.
+
+name: eval
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      full:
+        description: "Run the LLM lanes too (uses API budget)"
+        type: boolean
+        default: false
+
+jobs:
+  offline-lanes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: RBAC, retrieval boundary and audit lanes
+        run: pytest tests/rbac tests/audit
+
+  llm-lanes:
+    if: github.event_name == 'workflow_dispatch' && inputs.full
+    runs-on: ubuntu-latest
+    env:
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      GROQ_API_KEY_2: ${{ secrets.GROQ_API_KEY_2 }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: pytest tests/security tests/quality
+      - run: python run_adk_eval.py
+      - run: python regression_check.py
+      - name: Release gate
+        run: python quality_gate.py

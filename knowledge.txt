@@ -1,0 +1,56 @@
+[VISIBILITY: PUBLIC]
+
+## CLINIC OVERVIEW
+
+Kestrel Family Clinic is a fictional general-practice clinic used to
+demonstrate the MediDesk assistant. All names, plans and records in this file
+are synthetic.
+
+## OPENING HOURS
+
+The clinic is open Monday to Friday from 8:30am to 9:00pm, and Saturday from
+8:30am to 1:00pm. The clinic is closed on Sundays and public holidays.
+Registration closes 30 minutes before closing time.
+
+## CANCELLATION AND NO-SHOW POLICY
+
+Patients must cancel at least 24 hours before their appointment. Late
+cancellations and no-shows are charged a 20 dollar fee. Patients may
+reschedule once without charge if they give at least 24 hours' notice.
+
+## INSURANCE AND PANEL PLANS
+
+The clinic accepts AsterCare and Bluepeak panel plans. Patients show their
+member card at registration and the clinic files the claim. Patients without
+a panel plan pay at the counter and receive an itemised receipt.
+
+## VACCINATIONS
+
+Flu vaccines are available as walk-ins Monday to Friday from 2:00pm to
+5:00pm. Childhood vaccinations need an appointment, and parents should bring
+the child's health booklet.
+
+## FRONT DESK HANDLING OF RECORD REQUESTS
+
+Front desk staff do not discuss diagnoses, medications or test results.
+Requests about a patient's record are passed to the duty clinician.
+
+[VISIBILITY: CLINICAL]
+
+## PATIENT RECORD P-1001
+
+Name: Alex Tan. Date of birth: 12 Mar 1984. Diagnosis: type 2 diabetes.
+Current medication: metformin 500 mg, twice daily. Allergies: penicillin.
+Last visit: 18 Sep 2026.
+
+## PATIENT RECORD P-1002
+
+Name: Priya Nair. Date of birth: 30 Jul 1991. Diagnosis: asthma.
+Current medication: salbutamol inhaler, as needed. Allergies: none known.
+Last visit: 02 Sep 2026.
+
+## PATIENT RECORD P-1003
+
+Name: Daniel Koh. Date of birth: 05 Nov 1976. Diagnosis: hypertension.
+Current medication: amlodipine 5 mg, once daily. Allergies: sulfa drugs.
+Last visit: 29 Sep 2026.

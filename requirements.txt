@@ -1,0 +1,26 @@
+# --- Service ---
+fastapi
+uvicorn
+python-dotenv
+requests
+pydantic
+
+# --- RAG ---
+faiss-cpu
+numpy
+langchain
+langchain-community
+langchain-text-splitters
+langchain-huggingface
+sentence-transformers
+
+# --- LLM provider ---
+# Groq replaced Gemini after the Gemini free-tier quota was exhausted.
+groq
+
+# --- Eval lanes ---
+# google-adk[eval] pulls rouge-score/pandas, needed by `adk eval`.
+google-adk[eval]
+litellm
+deepeval
+pytest

@@ -1,0 +1,36 @@
+# Secrets — never commit
+.env
+
+# Virtualenv
+aienv/
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Generated FAISS index — rebuild with backend/rag_pipeline.py
+data/faiss/
+
+# Cached raw /ask responses and judge verdicts — delete to force fresh calls.
+# Lane reports and reports/baseline/ ARE committed: they are the evidence.
+reports/_cache/
+reports/_judge_cache/
+
+# Audit log from local runs (synthetic, but still request history)
+reports/audit.jsonl
+
+# ADK eval run history (regenerate with run_adk_eval.py)
+medidesk_agent/.adk/
+
+# Claude Code local runtime state
+.claude/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

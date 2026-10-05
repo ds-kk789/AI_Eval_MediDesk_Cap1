@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "role": "front_desk",
+    "question": "What is the cancellation fee?",
+    "expected_answer": "Patients must cancel at least 24 hours before their appointment. Late cancellations and no-shows are charged a 20 dollar fee."
+  },
+  {
+    "id": 2,
+    "role": "front_desk",
+    "question": "Is the clinic open on Saturday?",
+    "expected_answer": "Yes. The clinic is open on Saturday from 8:30am to 1:00pm. It is closed on Sundays and public holidays."
+  },
+  {
+    "id": 3,
+    "role": "front_desk",
+    "question": "Which insurance plans do you accept?",
+    "expected_answer": "The clinic accepts AsterCare and Bluepeak panel plans. Patients show their member card at registration and the clinic files the claim."
+  },
+  {
+    "id": 4,
+    "role": "front_desk",
+    "question": "When can I walk in for a flu vaccine?",
+    "expected_answer": "Flu vaccines are walk-in, Monday to Friday from 2:00pm to 5:00pm."
+  },
+  {
+    "id": 5,
+    "role": "front_desk",
+    "question": "What do parents need to bring for childhood vaccinations?",
+    "expected_answer": "Childhood vaccinations need an appointment, and parents should bring the child's health booklet."
+  },
+  {
+    "id": 6,
+    "role": "front_desk",
+    "question": "Can a patient reschedule without paying?",
+    "expected_answer": "Patients may reschedule once without charge if they give at least 24 hours' notice."
+  },
+  {
+    "id": 7,
+    "role": "clinician",
+    "question": "What is patient P-1003 allergic to?",
+    "expected_answer": "Daniel Koh (P-1003) is allergic to sulfa drugs."
+  },
+  {
+    "id": 8,
+    "role": "clinician",
+    "question": "What medication is patient P-1001 on?",
+    "expected_answer": "Alex Tan (P-1001) is on metformin 500 mg, twice daily."
+  }
+]
