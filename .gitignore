@@ -34,3 +34,6 @@ medidesk_agent/.adk/
 Thumbs.db
 .vscode/
 .idea/
+
+# Private study notes, not part of the submission
+docs/private/
