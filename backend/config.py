@@ -229,5 +229,10 @@ REGRESSION_RATE_MAX = 0.10            # quality lane; security/RBAC/trajectory =
 # Drift (rule BR-17) - starting points, checked against the control window
 DRIFT_PSI_ALERT = 0.25
 DRIFT_JS_ALERT = 0.10
-DRIFT_COVERAGE_SIMILARITY = 0.40      # top-1 similarity below this = not covered
+# Top-1 similarity below this = "not covered by knowledge.txt". Calibrated on
+# the windows (5 Oct 2026): at the proposal's 0.40, 18% of the NORMAL reference
+# week counted as uncovered (insurance and clinical lookups bottom out at 0.36),
+# while uncovered dengue questions top out at 0.41. 0.35 keeps the reference
+# week covered and catches most dengue and short telehealth questions.
+DRIFT_COVERAGE_SIMILARITY = 0.35
 DRIFT_SEED = 42

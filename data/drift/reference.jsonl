@@ -1,0 +1,100 @@
+{"id": "ref-001", "query": "Do you take my company insurance?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "ref-002", "query": "What do I need to bring to use my panel plan?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "ref-003", "query": "What is the diagnosis for Alex Tan?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "ref-004", "query": "What time do you close on Saturday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-005", "query": "Can a patient reschedule without paying?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "ref-006", "query": "What do I need to bring to use my panel plan?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "ref-007", "query": "What are your opening hours?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-008", "query": "How much notice do I need to cancel?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "ref-009", "query": "Hi, I'm calling on behalf of my elderly mother who has trouble getting around and I wanted to check something before we come in. is the clinic open on Sunday?", "role": "front_desk", "template_topic": "hours", "long": true}
+{"id": "ref-010", "query": "Do you do flu shots on Saturday?", "role": "front_desk", "template_topic": "vaccines", "long": false}
+{"id": "ref-011", "query": "Do childhood vaccinations need an appointment?", "role": "front_desk", "template_topic": "vaccines", "long": false}
+{"id": "ref-012", "query": "What are your opening hours?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-013", "query": "What do I need to bring to use my panel plan?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "ref-014", "query": "Is there a no-show charge?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "ref-015", "query": "When can I walk in for a flu vaccine?", "role": "front_desk", "template_topic": "vaccines", "long": false}
+{"id": "ref-016", "query": "Which insurance plans do you accept?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "ref-017", "query": "I don't have a panel plan, how do I pay?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "ref-018", "query": "When was P-1001's last visit?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "ref-019", "query": "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. do you do flu shots on Thursday?", "role": "front_desk", "template_topic": "vaccines", "long": true}
+{"id": "ref-020", "query": "Can I claim with Bluepeak here?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "ref-021", "query": "Is the clinic open on Sunday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-022", "query": "Is the clinic open on Saturday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-023", "query": "Do you take Bluepeak?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "ref-024", "query": "What medication is patient P-1003 on?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "ref-025", "query": "Pull up the record for Alex Tan.", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "ref-026", "query": "Sorry to bother you, I tried the website and couldn't find it, and my employer needs to know by tomorrow, so quick question. what do I need to bring to use my panel plan?", "role": "front_desk", "template_topic": "insurance", "long": true}
+{"id": "ref-027", "query": "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. when was P-1001's last visit?", "role": "clinician", "template_topic": "clinical", "long": true}
+{"id": "ref-028", "query": "Is the clinic open on Monday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-029", "query": "What is P-1003 allergic to?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "ref-030", "query": "Do you take a panel plan?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "ref-031", "query": "What time do you close on Wednesday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-032", "query": "I don't have a panel plan, how do I pay?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "ref-033", "query": "How much notice do I need to cancel?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "ref-034", "query": "How much notice do I need to cancel?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "ref-035", "query": "Do childhood vaccinations need an appointment?", "role": "front_desk", "template_topic": "vaccines", "long": false}
+{"id": "ref-036", "query": "Can I claim with a panel plan here?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "ref-037", "query": "What is the diagnosis for Alex Tan?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "ref-038", "query": "Which insurance plans do you accept?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "ref-039", "query": "Pull up the record for Daniel Koh.", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "ref-040", "query": "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. what time do you close on Monday?", "role": "front_desk", "template_topic": "hours", "long": true}
+{"id": "ref-041", "query": "Which insurance plans do you accept?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "ref-042", "query": "Is the clinic open on Sunday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-043", "query": "I don't have a panel plan, how do I pay?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "ref-044", "query": "What do I need to bring to use my panel plan?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "ref-045", "query": "What time do you close on Saturday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-046", "query": "Is there a no-show charge?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "ref-047", "query": "How much notice do I need to cancel?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "ref-048", "query": "What happens if I miss my appointment?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "ref-049", "query": "Is the clinic open on Saturday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-050", "query": "What do I need to bring to use my panel plan?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "ref-051", "query": "What is P-1003 allergic to?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "ref-052", "query": "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. which insurance plans do you accept?", "role": "front_desk", "template_topic": "insurance", "long": true}
+{"id": "ref-053", "query": "Are you open this weekend?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-054", "query": "Do you take a panel plan?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "ref-055", "query": "What time do you close on Wednesday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-056", "query": "Which insurance plans do you accept?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "ref-057", "query": "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. is there a no-show charge?", "role": "front_desk", "template_topic": "cancellation", "long": true}
+{"id": "ref-058", "query": "Is there a no-show charge?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "ref-059", "query": "Is the clinic open on Sunday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-060", "query": "How much notice do I need to cancel?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "ref-061", "query": "What are your opening hours?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-062", "query": "What are your opening hours?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-063", "query": "Sorry to bother you, I tried the website and couldn't find it, and my employer needs to know by tomorrow, so quick question. what time do you close on Thursday?", "role": "front_desk", "template_topic": "hours", "long": true}
+{"id": "ref-064", "query": "Can a patient reschedule without paying?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "ref-065", "query": "What is the diagnosis for Priya Nair?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "ref-066", "query": "Is the clinic open on Saturday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-067", "query": "Can I get a flu jab without booking?", "role": "front_desk", "template_topic": "vaccines", "long": false}
+{"id": "ref-068", "query": "What do I need to bring to use my panel plan?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "ref-069", "query": "When was P-1001's last visit?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "ref-070", "query": "When does registration close?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-071", "query": "Is the clinic open on Saturday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-072", "query": "What is P-1003 allergic to?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "ref-073", "query": "Is there a no-show charge?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "ref-074", "query": "Pull up the record for Alex Tan.", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "ref-075", "query": "Which insurance plans do you accept?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "ref-076", "query": "What medication is patient P-1002 on?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "ref-077", "query": "When does registration close?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-078", "query": "Hi, I'm calling on behalf of my elderly mother who has trouble getting around and I wanted to check something before we come in. is there a no-show charge?", "role": "front_desk", "template_topic": "cancellation", "long": true}
+{"id": "ref-079", "query": "What is the diagnosis for Daniel Koh?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "ref-080", "query": "Can I get a flu jab without booking?", "role": "front_desk", "template_topic": "vaccines", "long": false}
+{"id": "ref-081", "query": "Can a patient reschedule without paying?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "ref-082", "query": "Is the clinic open on Saturday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-083", "query": "Are you open on a public holiday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-084", "query": "When was P-1002's last visit?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "ref-085", "query": "What is P-1001 allergic to?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "ref-086", "query": "When does registration close?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-087", "query": "Which insurance plans do you accept?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "ref-088", "query": "Can I get a flu jab without booking?", "role": "front_desk", "template_topic": "vaccines", "long": false}
+{"id": "ref-089", "query": "Are you open this weekend?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-090", "query": "Can a patient reschedule without paying?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "ref-091", "query": "What is the diagnosis for Daniel Koh?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "ref-092", "query": "When does registration close?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-093", "query": "Is the clinic open on Saturday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-094", "query": "Is the clinic open on Saturday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-095", "query": "Are you open this weekend?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-096", "query": "Do you take my company insurance?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "ref-097", "query": "What is P-1003 allergic to?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "ref-098", "query": "Are you open on Sunday morning?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-099", "query": "Is the clinic open on Saturday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "ref-100", "query": "When was P-1003's last visit?", "role": "clinician", "template_topic": "clinical", "long": false}

@@ -1,0 +1,88 @@
+{
+  "_note": "Rewording templates seeded from golden_dataset.json. make_drift_windows.py fills the {slots} with a fixed seed. 'topic' is the generator's own label, kept for reference; drift_check.py does NOT read it, it assigns topics from the nearest knowledge-base section.",
+  "slots": {
+    "day": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    "when": ["this weekend", "tonight", "on Sunday morning", "on a public holiday", "after 8pm"],
+    "plan": ["AsterCare", "Bluepeak", "my company insurance", "a panel plan"],
+    "pid": ["P-1001", "P-1002", "P-1003"],
+    "name": ["Alex Tan", "Priya Nair", "Daniel Koh"]
+  },
+  "topics": {
+    "hours": {
+      "role": "front_desk",
+      "templates": [
+        "Is the clinic open on {day}?",
+        "What time do you close on {day}?",
+        "Are you open {when}?",
+        "What are your opening hours?",
+        "When does registration close?",
+        "Is the clinic open on Saturday?"
+      ]
+    },
+    "insurance": {
+      "role": "front_desk",
+      "templates": [
+        "Which insurance plans do you accept?",
+        "Do you take {plan}?",
+        "Can I claim with {plan} here?",
+        "What do I need to bring to use my panel plan?",
+        "I don't have a panel plan, how do I pay?"
+      ]
+    },
+    "cancellation": {
+      "role": "front_desk",
+      "templates": [
+        "What is the cancellation fee?",
+        "How much notice do I need to cancel?",
+        "Can a patient reschedule without paying?",
+        "What happens if I miss my appointment?",
+        "Is there a no-show charge?"
+      ]
+    },
+    "vaccines": {
+      "role": "front_desk",
+      "templates": [
+        "When can I walk in for a flu vaccine?",
+        "Do you do flu shots on {day}?",
+        "What do parents need to bring for childhood vaccinations?",
+        "Do childhood vaccinations need an appointment?",
+        "Can I get a flu jab without booking?"
+      ]
+    },
+    "clinical": {
+      "role": "clinician",
+      "templates": [
+        "What is {pid} allergic to?",
+        "What medication is patient {pid} on?",
+        "When was {pid}'s last visit?",
+        "What is the diagnosis for {name}?",
+        "Pull up the record for {name}."
+      ]
+    },
+    "dengue": {
+      "role": "front_desk",
+      "templates": [
+        "Do you test for dengue fever?",
+        "My child has a high fever and a rash after mosquito bites, can we walk in today?",
+        "Is there a dengue screening service at the clinic?",
+        "How long is the wait for a dengue blood test?",
+        "Should I come in if I think I have dengue?"
+      ]
+    },
+    "telehealth": {
+      "role": "front_desk",
+      "templates": [
+        "Do you offer video consultations?",
+        "Can I see the doctor online instead of coming in?",
+        "How do I book a telehealth appointment?",
+        "Is there a fee for a phone consultation?",
+        "Can I get an MC from a teleconsult?"
+      ]
+    }
+  },
+  "long_prefixes": [
+    "Hi, I'm calling on behalf of my elderly mother who has trouble getting around and I wanted to check something before we come in. ",
+    "Sorry to bother you, I tried the website and couldn't find it, and my employer needs to know by tomorrow, so quick question. ",
+    "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. "
+  ]
+}

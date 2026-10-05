@@ -74,7 +74,9 @@ class FakeLlm(BaseLlm):
                 return
             text = config.RESTRICTED_REFUSAL_TEXT if "Koh" in question else config.REFUSAL_TEXT
 
-        yield LlmResponse(content=types.Content(role="model", parts=[types.Part(text=text)]))
+        # gpt-oss style: a reasoning part (thought=True) before the reply.
+        thought = types.Part(text="We have the answer. Provide that.", thought=True)
+        yield LlmResponse(content=types.Content(role="model", parts=[thought, types.Part(text=text)]))
 
 
 agent_module.select_model = lambda: FakeLlm()
@@ -126,6 +128,7 @@ def run():
         r = post(client, "/ask", "What is the cancellation fee?", FD).json()
         check("Front desk", "Policy question answered (Allowed)", "BR-12", r["decision"] == "Allowed" and "20 dollar" in r["answer"], r["answer"][:120])
         check("Front desk", "Policy tool called", "BR-5", r["tools_called"] == ["retrieve_clinic_policy"], r["tools_called"])
+        check("Front desk", "Model reasoning (thought parts) stripped from the answer", "-", "Provide that" not in r["answer"], r["answer"][:80])
         check("Front desk", "Top source is the cancellation section", "BR-10", "cancellation" in r["sources"][0]["id"], ids(r))
         check("Front desk", "Every source is PUBLIC", "BR-5", all(s["visibility"] == "public" for s in r["sources"]), ids(r))
 

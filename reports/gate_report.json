@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-10-05T08:49:37+00:00",
-  "verdict": "BLOCKED",
-  "hard_checks": 6,
-  "hard_passed": 0,
+  "generated_at": "2026-10-05T10:15:01+00:00",
+  "verdict": "PASSED",
+  "hard_checks": 10,
+  "hard_passed": 10,
   "lanes": [
     "adk",
     "audit",
@@ -11,65 +11,123 @@
     "regression",
     "security"
   ],
-  "lanes_reported": [],
+  "lanes_reported": [
+    "adk",
+    "audit",
+    "quality",
+    "rbac",
+    "regression",
+    "security"
+  ],
   "rows": [
     {
       "lane": "rbac",
-      "metric": "rbac_report.json not found",
-      "value": null,
-      "threshold": "required",
+      "metric": "access_control_pass_rate",
+      "value": 1.0,
+      "threshold": ">= 1.0",
       "type": "hard",
-      "status": "MISSING",
+      "status": "PASS",
       "rules": "BR-1\u20133"
     },
     {
       "lane": "security",
-      "metric": "security_report.json not found",
-      "value": null,
-      "threshold": "required",
+      "metric": "exploit_count",
+      "value": 0,
+      "threshold": "<= 0",
       "type": "hard",
-      "status": "MISSING",
-      "rules": "BR-4\u20139, 11"
+      "status": "PASS",
+      "rules": "BR-4, 6\u20139, 11"
+    },
+    {
+      "lane": "security",
+      "metric": "restricted_retrievals",
+      "value": 0,
+      "threshold": "<= 0",
+      "type": "hard",
+      "status": "PASS",
+      "rules": "BR-5"
     },
     {
       "lane": "adk",
-      "metric": "adk_report.json not found",
-      "value": null,
-      "threshold": "required",
+      "metric": "patient_tool_leaks",
+      "value": 0,
+      "threshold": "<= 0",
       "type": "hard",
-      "status": "MISSING",
-      "rules": "BR-5, 12"
+      "status": "PASS",
+      "rules": "BR-5"
+    },
+    {
+      "lane": "adk",
+      "metric": "tool_trajectory_avg_score",
+      "value": 1.0,
+      "threshold": ">= 1.0",
+      "type": "hard",
+      "status": "PASS",
+      "rules": "BR-5"
+    },
+    {
+      "lane": "adk",
+      "metric": "response_match_score",
+      "value": 0.6239,
+      "threshold": ">= 0.25",
+      "type": "soft",
+      "status": "PASS",
+      "rules": "BR-12"
     },
     {
       "lane": "quality",
-      "metric": "quality_report.json not found",
-      "value": null,
-      "threshold": "required",
+      "metric": "answer_relevancy",
+      "value": 1.0,
+      "threshold": ">= 0.95",
       "type": "hard",
-      "status": "MISSING",
+      "status": "PASS",
+      "rules": "BR-12"
+    },
+    {
+      "lane": "quality",
+      "metric": "faithfulness",
+      "value": 1.0,
+      "threshold": ">= 0.95",
+      "type": "hard",
+      "status": "PASS",
+      "rules": "BR-10"
+    },
+    {
+      "lane": "quality",
+      "metric": "correctness",
+      "value": 0.95,
+      "threshold": ">= 0.95",
+      "type": "hard",
+      "status": "PASS",
       "rules": "BR-10, 12"
     },
     {
       "lane": "audit",
-      "metric": "audit_report.json not found",
-      "value": null,
-      "threshold": "required",
+      "metric": "audit_completeness",
+      "value": 1.0,
+      "threshold": ">= 1.0",
       "type": "hard",
-      "status": "MISSING",
+      "status": "PASS",
       "rules": "BR-13"
     },
     {
       "lane": "regression",
-      "metric": "regression_report.json not found",
-      "value": null,
-      "threshold": "required",
+      "metric": "verdict vs frozen baseline",
+      "value": "No significant change",
+      "threshold": "not Regressed",
       "type": "hard",
-      "status": "MISSING",
-      "rules": "BR-15, 16"
+      "status": "PASS",
+      "rules": "BR-16"
     }
   ],
   "drift": {
-    "status": "not run",
-    "alerts": []
+    "status": "alert",
+    "alerts": [
+      "Input drift: Topic mix PSI 1.808 (alert at 0.25)",
+      "Input drift: Topic mix JS 0.123 (alert at 0.1)",
+      "Input drift: Query length PSI 1.451 (alert at 0.25)",
+      "Output drift: Top-1 retrieval similarity PSI 0.876 (alert at 0.25)",
+      "Concept drift: Out-of-coverage rate (top-1 < 0.35) Rate change 0.11 (alert at 0.1)"
+    ]
   }
 }

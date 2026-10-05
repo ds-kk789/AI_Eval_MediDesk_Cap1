@@ -1,0 +1,44 @@
+{
+  "lane": "audit",
+  "total_cases": 5,
+  "passed": 5,
+  "failed": 0,
+  "failure_rate": 0.0,
+  "detailed_logs": [
+    {
+      "id": "AUD-01",
+      "title": "Every audited request writes exactly one line",
+      "passed": true,
+      "evidence": "{'f3eb0044-e27e-48c7-9aea-4014b89d143a': 1, 'c929295e-1e52-4b7b-a855-d8da5c9a06a4': 1, '2a394cc5-b901-4ed8-a334-2c1e156a4a79': 1, '8a5c4905-7606-4869-857e-74eb48c006c7': 1, '9e5b05b7-ee85-4143-be7c-79487a4a6679': 1, '6ff5887f-6c8c-45c7-a353-c80e2f5421b8': 1}",
+      "rules": "BR-13"
+    },
+    {
+      "id": "AUD-02",
+      "title": "Required fields present on every line",
+      "passed": true,
+      "evidence": "[[], [], [], [], [], []]",
+      "rules": "BR-13"
+    },
+    {
+      "id": "AUD-03",
+      "title": "No question or answer text in the log",
+      "passed": true,
+      "evidence": "clean",
+      "rules": "BR-13"
+    },
+    {
+      "id": "AUD-04",
+      "title": "401 and 403 rejections are logged as Denied",
+      "passed": true,
+      "evidence": "['Denied', 'Denied', 'Denied', 'Denied']",
+      "rules": "BR-13"
+    },
+    {
+      "id": "AUD-05",
+      "title": "Patient IDs never appear in the endpoint field",
+      "passed": true,
+      "evidence": "['/ask', '/clinical/ask', '/clinical/patients/{patient_id}']",
+      "rules": "BR-13"
+    }
+  ]
+}

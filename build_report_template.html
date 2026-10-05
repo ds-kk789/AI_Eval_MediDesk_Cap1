@@ -217,6 +217,24 @@ mark { background:var(--critical-bg); color:var(--critical-ink); border-radius:3
 #tip b { display:block; font-size:14px; font-variant-numeric:tabular-nums; }
 #tip span { color:var(--text-2); }
 .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+
+/* ---------- about this evaluation ---------- */
+.about { padding:0; }
+.about summary { list-style:none; cursor:pointer; padding:13px 18px; display:flex; gap:12px; align-items:baseline; flex-wrap:wrap; }
+.about summary::-webkit-details-marker { display:none; }
+.about summary::before { content:"▸"; color:var(--muted); font-size:12px; transition:transform .15s; }
+.about[open] summary::before { transform:rotate(90deg); }
+.about-k { font-size:11.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:600; }
+.about-g { font-weight:600; font-size:14.5px; flex:1 1 320px; }
+.about-b { padding:0 18px 16px; }
+.about-how { color:var(--text-2); margin:0 0 12px; font-size:13px; max-width:900px; }
+.about-t td { font-size:13px; }
+.bands { min-width:280px; }
+.band { display:grid; grid-template-columns:10px max-content 1fr; gap:8px; align-items:baseline; margin-bottom:3px; }
+.band b { white-space:nowrap; }
+.band span:last-child { color:var(--text-2); }
+.band-note { color:var(--text-2); margin-bottom:3px; }
+.limit { color:var(--text-2); font-size:13px; margin:8px 0 0; }
 :focus-visible { outline:2px solid var(--s1); outline-offset:2px; }
 </style>
 </head>
@@ -277,7 +295,7 @@ var DATA = /*__DATA__*/null;
   }
   function sc(v) { return v === null || v === undefined ? "—" : Number(v).toFixed(2); }
   function pct(v) { return v === null || v === undefined ? "—" : Math.round(v * 1000) / 10 + "%"; }
-  function cap(t) { return t ? (t.charAt(0).toUpperCase() + t.slice(1)).replace(/pii/i, "PII") : t; }
+  function cap(t) { return t ? (t.charAt(0).toUpperCase() + t.slice(1)).replace(/\bpii\b/i, "PII") : t; }
 
   var STATUS = {
     pass: ["pass", "✓", "Pass"], fail: ["fail", "✕", "Fail"], warn: ["warn", "▲", "Warn"],
@@ -669,7 +687,7 @@ var DATA = /*__DATA__*/null;
       kpi("Critical issues", String(counts.critical), counts.critical ? "fix before anything else" : "none open", counts.critical ? "fail" : "pass", "overview"),
       kpi("Security exploits", exploits === null ? "—" : exploits + " / " + sec.total_cases, exploits === null ? "lane not run" : "target 0 leaked", exploits === null ? "missing" : (exploits ? "fail" : "pass"), "security", exploits ? "fail" : "all"),
       kpi("Lowest quality metric", minQ ? fmt(minQ[1]) : "—", minQ ? minQ[0].replace(/_/g, " ") + " · target ≥ " + fmt(d.thresholds.quality) : "lane not run", minQ ? (minQ[1] >= d.thresholds.quality ? "pass" : "fail") : "missing", "quality", minQ && minQ[1] < d.thresholds.quality ? "fail" : "all"),
-      kpi("Regression vs v1", reg ? reg.verdict : "—", reg ? reg.change : "lane not run", reg ? (reg.verdict === "Regressed" ? "fail" : "pass") : "missing", "regression"),
+      kpi("Regression vs baseline", reg ? (reg.verdict === "No significant change" ? "No change" : reg.verdict) : "—", reg ? "vs " + (reg.baseline.version || "baseline") + (reg.baseline.commit ? " (" + reg.baseline.commit + ")" : "") : "lane not run", reg ? (reg.verdict === "Regressed" ? "fail" : "pass") : "missing", "regression"),
       kpi("Drift", dr ? (dr.alerts.length ? dr.alerts.length + " alerts" : "Stable") : "—", dr ? "alert only, never blocks" : "lane not run", dr ? (dr.alerts.length ? "warn" : "pass") : "missing", "drift"),
       kpi("Lanes reported", g.lanes_reported.length + " / " + g.lanes.length, g.lanes_reported.length === g.lanes.length ? "all lanes ran" : "missing reports block release", g.lanes_reported.length === g.lanes.length ? "pass" : "missing", "overview")
     ]));
@@ -901,7 +919,9 @@ var DATA = /*__DATA__*/null;
     openDrawer(c.eval_id.replace(/_/g, " "), pill(c.status, c.status === "warn" ? "Soft warn" : null), [
       ["Question", quote(c.question)],
       ["Trajectory", kv([["Expected", toolList(c.expected_tools)], ["Actual", toolList(c.actual_tools)], ["Score", c.trajectory_score]])],
-      ["Response match", kv([["ROUGE-1", c.response_match], ["Soft floor", D().thresholds.adk_response_match]])],
+      c.answer ? ["Answer", quote(c.answer)] : null,
+      ["Response match", kv([["ROUGE-1 (visible answer)", c.response_match], ["ADK raw (incl. reasoning text)", c.adk_response_match_raw], ["Soft floor", D().thresholds.adk_response_match]])],
+      c.reference ? ["Reference answer", quote(c.reference)] : null,
       ["Rules", ruleChips(c.rule_ids)]
     ]);
   }
@@ -1057,6 +1077,11 @@ var DATA = /*__DATA__*/null;
     });
     out.push(panel("Drift signals", "Control must stay quiet; if it alerts, the thresholds are too jumpy.", [h("div", { class: "tablewrap" }, [h("table", null, [h("thead", null, [h("tr", null, ["Type", "Signal", "Method", "Control", "", "Current", "", "Alert at"].map(function (x) { return h("th", { text: x }); }))]), tb])]),
       h("p", { class: "meta", style: "margin-top:10px", text: "KL(reference‖current) " + fmt(rep.kl_reference_current, 3) + " (report only) · embedding centroid distance: control " + fmt(rep.embedding_centroid_distance.control) + ", current " + fmt(rep.embedding_centroid_distance.current) + "." })]));
+    var extra = [];
+    if (rep.uncovered_examples && rep.uncovered_examples.length) extra.push(h("div", null, [h("h2", { text: "Current queries the documents don't cover", style: "font-size:13px;margin:0 0 6px" }), h("ul", { style: "margin:0;padding-left:18px" }, rep.uncovered_examples.slice(0, 5).map(function (q) { return h("li", { text: q }); }))]));
+    if (rep.skipped && rep.skipped.length) extra.push(h("div", null, [h("h2", { text: "Not computed in this run", style: "font-size:13px;margin:0 0 6px" }), h("ul", { style: "margin:0;padding-left:18px" }, rep.skipped.map(function (x) { return h("li", null, [h("b", { text: x.feature }), " (" + x.type + "): " + x.why]); }))]));
+    (rep.limitations || []).forEach(function (t) { extra.push(h("p", { class: "limit", text: "Limitation: " + t })); });
+    if (extra.length) out.push(panel("Coverage and gaps", null, [h("div", { class: "grid g2" }, extra.slice(0, 2))].concat(extra.slice(2))));
     return out;
   }
 
@@ -1101,12 +1126,47 @@ var DATA = /*__DATA__*/null;
     return out;
   }
 
+  /* ---------- "About this evaluation" ---------- */
+  function aboutPanel(tab) {
+    var g = DATA.guide[tab];
+    if (!g) return null;
+    var key = "medidesk-about-" + tab, open = true;
+    try { open = localStorage.getItem(key) !== "closed"; } catch (e) {}
+
+    var rows = h("tbody");
+    g.metrics.forEach(function (m) {
+      var meaning = h("td", { class: "bands" });
+      if (m.note) meaning.appendChild(h("div", { class: "band-note", text: m.note }));
+      (m.bands || []).forEach(function (b) {
+        meaning.appendChild(h("div", { class: "band" }, [h("span", { class: "dot " + (b[2] === "info" ? "missing" : b[2]), "aria-hidden": "true" }), h("b", { text: b[0] }), h("span", { text: b[1] })]));
+      });
+      rows.appendChild(h("tr", null, [h("td", { class: "strong", text: m.name }), h("td", { class: "num", text: m.range }), h("td", { class: "num", text: m.gate || "—" }), meaning]));
+    });
+
+    var det = h("details", { class: "panel about" }, [
+      h("summary", null, [h("span", { class: "about-k", text: tab === "overview" ? "How to read this page" : "About this evaluation" }), h("span", { class: "about-g", text: g.grades })]),
+      h("div", { class: "about-b" }, [
+        h("p", { class: "about-how", text: g.how }),
+        h("div", { class: "tablewrap" }, [h("table", { class: "about-t" }, [h("thead", null, [h("tr", null, ["Metric", "Range", "Threshold", "What the values mean"].map(function (x) { return h("th", { text: x }); }))]), rows])])
+      ])
+    ]);
+    if (open) det.setAttribute("open", "");
+    det.addEventListener("toggle", function () { try { localStorage.setItem(key, det.open ? "open" : "closed"); } catch (e) {} });
+    return det;
+  }
+
   /* ---------- render ---------- */
   var VIEWS = { overview: viewOverview, security: viewSecurity, rbac: viewRbac, agent: viewAgent, quality: viewQuality, regression: viewRegression, drift: viewDrift, audit: viewAudit, backend: viewBackend };
   function render() {
     renderChrome();
     var main = document.getElementById("main"); main.textContent = "";
-    (VIEWS[state.tab] || viewOverview)().forEach(function (n) { if (n) main.appendChild(n); });
+    var tab = VIEWS[state.tab] ? state.tab : "overview";
+    var nodes = VIEWS[tab]().filter(Boolean);
+    // Lane tabs open with what the evaluation grades; the overview ends with it.
+    var about = aboutPanel(tab);
+    if (about && tab !== "overview") nodes.splice(nodes[0] && nodes[0].className === "sample-banner" ? 1 : 0, 0, about);
+    else if (about) nodes.push(about);
+    nodes.forEach(function (n) { main.appendChild(n); });
     if (state.focus) {
       var hl = main.querySelector("tr.hl");
       if (hl) hl.scrollIntoView({ block: "center" });

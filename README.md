@@ -6,10 +6,10 @@ project it is modelled on, the interesting part is not the chatbot. It is the
 evaluation harness that proves the front desk never sees patient data, and
 the gate that blocks a release when that proof fails.
 
-> **Status: backend implemented.** `backend/` and `medidesk_agent/` are
-> built (FastAPI, auth, RAG, audit, per-role ADK agent). The web app and the
-> eval lanes are still stubs that name the file to port from
-> `AI_Eval_Module_4_3_Steps`.
+> **Status: backend and eval harness implemented; first live run passed the
+> gate (5 Oct 2026).** `backend/`, `medidesk_agent/`, every eval lane, the
+> regression and drift checks, the release gate and the evaluation dashboard
+> (`reports/evaluation_report.html`) are built. The web app is next.
 
 **Problem statement:** How do we let an AI assistant help clinic staff
 without it ever leaking patient records, and prove that before it ships?

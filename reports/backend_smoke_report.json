@@ -1,8 +1,8 @@
 {
   "lane": "backend_smoke",
-  "generated_at": "05 Oct 2026, 09:13 UTC",
-  "total_cases": 30,
-  "passed": 30,
+  "generated_at": "05 Oct 2026, 10:15 UTC",
+  "total_cases": 31,
+  "passed": 31,
   "failed": 0,
   "rules_covered": [
     "BR-1",
@@ -92,6 +92,13 @@
       "rule": "BR-5",
       "passed": true,
       "evidence": "['retrieve_clinic_policy']"
+    },
+    {
+      "area": "Front desk",
+      "check": "Model reasoning (thought parts) stripped from the answer",
+      "rule": "-",
+      "passed": true,
+      "evidence": "ANSWER: ## CANCELLATION AND NO-SHOW POLICY\n\nPatients must cancel at least 24 hou"
     },
     {
       "area": "Front desk",

@@ -1,0 +1,143 @@
+{
+  "eval_set_id": "medidesk_public_policy",
+  "name": "Front-desk clinic policy questions",
+  "description": "Ordinary front-desk policy questions. The agent must route to retrieve_clinic_policy (checked by tool name; query wording varies) and answer from the clinic documents. Response match is a soft ROUGE-1 check.",
+  "eval_cases": [
+    {
+      "eval_id": "cancellation_fee",
+      "conversation": [
+        {
+          "invocation_id": "pp-001",
+          "user_content": {
+            "role": "user",
+            "parts": [
+              {
+                "text": "What is the cancellation fee?"
+              }
+            ]
+          },
+          "final_response": {
+            "role": "model",
+            "parts": [
+              {
+                "text": "Patients must cancel at least 24 hours before their appointment. Late cancellations and no-shows are charged a 20 dollar fee."
+              }
+            ]
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "retrieve_clinic_policy",
+                "args": {
+                  "query": "cancellation fee"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "eval_id": "saturday_hours",
+      "conversation": [
+        {
+          "invocation_id": "pp-002",
+          "user_content": {
+            "role": "user",
+            "parts": [
+              {
+                "text": "Is the clinic open on Saturday?"
+              }
+            ]
+          },
+          "final_response": {
+            "role": "model",
+            "parts": [
+              {
+                "text": "Yes. The clinic is open on Saturday from 8:30am to 1:00pm. It is closed on Sundays and public holidays."
+              }
+            ]
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "retrieve_clinic_policy",
+                "args": {
+                  "query": "Saturday opening hours"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "eval_id": "insurance_plans",
+      "conversation": [
+        {
+          "invocation_id": "pp-003",
+          "user_content": {
+            "role": "user",
+            "parts": [
+              {
+                "text": "Which insurance plans do you accept?"
+              }
+            ]
+          },
+          "final_response": {
+            "role": "model",
+            "parts": [
+              {
+                "text": "The clinic accepts AsterCare and Bluepeak panel plans. Patients show their member card at registration and the clinic files the claim."
+              }
+            ]
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "retrieve_clinic_policy",
+                "args": {
+                  "query": "insurance panel plans accepted"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "eval_id": "flu_walk_in",
+      "conversation": [
+        {
+          "invocation_id": "pp-004",
+          "user_content": {
+            "role": "user",
+            "parts": [
+              {
+                "text": "When can I walk in for a flu vaccine?"
+              }
+            ]
+          },
+          "final_response": {
+            "role": "model",
+            "parts": [
+              {
+                "text": "Flu vaccines are walk-in, Monday to Friday from 2:00pm to 5:00pm."
+              }
+            ]
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "retrieve_clinic_policy",
+                "args": {
+                  "query": "flu vaccine walk-in hours"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

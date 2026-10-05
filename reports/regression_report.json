@@ -1,0 +1,172 @@
+{
+  "verdict": "No significant change",
+  "generated_at": "2026-10-05T10:15:01+00:00",
+  "change": "No config, model, prompt or dataset change (re-run of the baseline system)",
+  "baseline": {
+    "commit": "f8c93ae",
+    "model": "openai/gpt-oss-20b",
+    "judge_model": "openai/gpt-oss-20b",
+    "prompt_version": "v1",
+    "dataset_hash": "sha256:fd5ae78596c3",
+    "config": {
+      "CHUNK_SIZE": 500,
+      "CHUNK_OVERLAP": 100,
+      "TOP_K": 5
+    },
+    "created_at": "2026-10-05T10:15:01+00:00",
+    "version": "v1",
+    "lanes": [
+      "rbac",
+      "security",
+      "adk",
+      "quality",
+      "audit"
+    ],
+    "promoted_with_failures": []
+  },
+  "candidate": {
+    "commit": "f8c93ae",
+    "model": "openai/gpt-oss-20b",
+    "judge_model": "openai/gpt-oss-20b",
+    "prompt_version": "v1",
+    "dataset_hash": "sha256:fd5ae78596c3",
+    "config": {
+      "CHUNK_SIZE": 500,
+      "CHUNK_OVERLAP": 100,
+      "TOP_K": 5
+    },
+    "created_at": "2026-10-05T10:15:01+00:00",
+    "version": "candidate"
+  },
+  "metrics": [
+    {
+      "lane": "quality",
+      "metric": "answer_relevancy",
+      "baseline": 1.0,
+      "candidate": 1.0,
+      "delta": 0.0,
+      "tolerance": -0.02,
+      "status": "PASS"
+    },
+    {
+      "lane": "quality",
+      "metric": "faithfulness",
+      "baseline": 1.0,
+      "candidate": 1.0,
+      "delta": 0.0,
+      "tolerance": -0.02,
+      "status": "PASS"
+    },
+    {
+      "lane": "quality",
+      "metric": "correctness",
+      "baseline": 0.95,
+      "candidate": 0.95,
+      "delta": 0.0,
+      "tolerance": -0.02,
+      "status": "PASS"
+    },
+    {
+      "lane": "security",
+      "metric": "exploit_count",
+      "baseline": 0,
+      "candidate": 0,
+      "delta": 0,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "lane": "security",
+      "metric": "restricted_retrievals",
+      "baseline": 0,
+      "candidate": 0,
+      "delta": 0,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "lane": "rbac",
+      "metric": "access_control_pass_rate",
+      "baseline": 1.0,
+      "candidate": 1.0,
+      "delta": 0.0,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "lane": "audit",
+      "metric": "audit_completeness",
+      "baseline": 1.0,
+      "candidate": 1.0,
+      "delta": 0.0,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "lane": "adk",
+      "metric": "tool_trajectory_avg_score",
+      "baseline": 1.0,
+      "candidate": 1.0,
+      "delta": 0.0,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "lane": "adk",
+      "metric": "response_match_score",
+      "baseline": 0.6239,
+      "candidate": 0.6239,
+      "delta": 0.0,
+      "tolerance": null,
+      "status": "INFO"
+    }
+  ],
+  "lanes": [
+    {
+      "lane": "rbac",
+      "total": 21,
+      "regressed": 0,
+      "improved": 0,
+      "rate": 0.0,
+      "max_rate": 0.0,
+      "status": "PASS"
+    },
+    {
+      "lane": "security",
+      "total": 15,
+      "regressed": 0,
+      "improved": 0,
+      "rate": 0.0,
+      "max_rate": 0.0,
+      "status": "PASS"
+    },
+    {
+      "lane": "adk",
+      "total": 7,
+      "regressed": 0,
+      "improved": 0,
+      "rate": 0.0,
+      "max_rate": 0.0,
+      "status": "PASS"
+    },
+    {
+      "lane": "quality",
+      "total": 8,
+      "regressed": 0,
+      "improved": 0,
+      "rate": 0.0,
+      "max_rate": 0.1,
+      "status": "PASS"
+    },
+    {
+      "lane": "audit",
+      "total": 5,
+      "regressed": 0,
+      "improved": 0,
+      "rate": 0.0,
+      "max_rate": 0.0,
+      "status": "PASS"
+    }
+  ],
+  "flipped_cases": []
+}

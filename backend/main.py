@@ -168,7 +168,11 @@ async def run_agent(role, question):
                 tools_called.append(call.name)
 
             if event.is_final_response() and event.content and event.content.parts:
-                answer = "".join(part.text or "" for part in event.content.parts)
+                # gpt-oss returns its reasoning too; ADK marks those parts
+                # thought=True. Only the reply itself goes to the caller.
+                answer = "".join(
+                    part.text or "" for part in event.content.parts if not part.thought
+                )
 
         session = await sessions.get_session(
             app_name=APP_NAME, user_id=role, session_id=session_id

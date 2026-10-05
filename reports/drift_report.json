@@ -1,0 +1,163 @@
+{
+  "generated_at": "2026-10-05T09:34:02+00:00",
+  "windows": {
+    "reference": 100,
+    "control": 100,
+    "current": 100
+  },
+  "topic_mix": {
+    "topics": [
+      "Opening hours",
+      "Insurance",
+      "Cancellations",
+      "Vaccinations",
+      "Clinical lookups",
+      "Other policy",
+      "Not covered"
+    ],
+    "unit": "% of queries",
+    "reference": [
+      33,
+      24,
+      16,
+      8,
+      19,
+      0,
+      0
+    ],
+    "control": [
+      32,
+      24,
+      16,
+      8,
+      20,
+      0,
+      0
+    ],
+    "current": [
+      15,
+      20,
+      9,
+      22,
+      21,
+      2,
+      11
+    ]
+  },
+  "signals": [
+    {
+      "type": "input",
+      "feature": "Topic mix",
+      "method": "PSI",
+      "control": 0.001,
+      "current": 1.808,
+      "threshold": 0.25,
+      "status": "alert",
+      "control_status": "stable"
+    },
+    {
+      "type": "input",
+      "feature": "Topic mix",
+      "method": "JS",
+      "control": 0.0,
+      "current": 0.123,
+      "threshold": 0.1,
+      "status": "alert",
+      "control_status": "stable"
+    },
+    {
+      "type": "input",
+      "feature": "Query length",
+      "method": "PSI",
+      "control": 0.036,
+      "current": 1.451,
+      "threshold": 0.25,
+      "status": "alert",
+      "control_status": "stable"
+    },
+    {
+      "type": "input",
+      "feature": "Clinician share of queries",
+      "method": "PSI",
+      "control": 0.0,
+      "current": 0.014,
+      "threshold": 0.25,
+      "status": "stable",
+      "control_status": "stable"
+    },
+    {
+      "type": "output",
+      "feature": "Top-1 retrieval similarity",
+      "method": "PSI",
+      "control": 0.021,
+      "current": 0.876,
+      "threshold": 0.25,
+      "status": "alert",
+      "control_status": "stable"
+    },
+    {
+      "type": "output",
+      "feature": "Nearest chunk dropped by role filter",
+      "method": "PSI",
+      "control": 0.0,
+      "current": 0.198,
+      "threshold": 0.25,
+      "status": "moderate",
+      "control_status": "stable"
+    },
+    {
+      "type": "concept",
+      "feature": "Out-of-coverage rate (top-1 < 0.35)",
+      "method": "Rate change",
+      "reference": 0.0,
+      "control": 0.0,
+      "current": 0.11,
+      "threshold": 0.1,
+      "status": "alert",
+      "control_status": "stable"
+    }
+  ],
+  "alerts": [
+    "Input drift: Topic mix PSI 1.808 (alert at 0.25)",
+    "Input drift: Topic mix JS 0.123 (alert at 0.1)",
+    "Input drift: Query length PSI 1.451 (alert at 0.25)",
+    "Output drift: Top-1 retrieval similarity PSI 0.876 (alert at 0.25)",
+    "Concept drift: Out-of-coverage rate (top-1 < 0.35) Rate change 0.11 (alert at 0.1)"
+  ],
+  "recommendation": "Vaccinations 8% → 22%, Not covered 0% → 11%. 11% of current queries match nothing in knowledge.txt (e.g. \"Can I see the doctor online instead of coming in?\"): add those topics to the knowledge base, then rerun the regression check.",
+  "kl_reference_current": 0.296,
+  "embedding_centroid_distance": {
+    "control": 0.027,
+    "current": 0.159
+  },
+  "uncovered_examples": [
+    "Can I see the doctor online instead of coming in?",
+    "Sorry to bother you, I tried the website and couldn't find it, and my employer needs to know by tomorrow, so quick question. can I see the doctor online instead of coming in?",
+    "Can I get an MC from a teleconsult?",
+    "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. do you test for dengue fever?",
+    "Hi, I'm calling on behalf of my elderly mother who has trouble getting around and I wanted to check something before we come in. when was P-1001's last visit?",
+    "How long is the wait for a dengue blood test?",
+    "Do you offer video consultations?",
+    "Hi, I'm calling on behalf of my elderly mother who has trouble getting around and I wanted to check something before we come in. can I get an MC from a teleconsult?"
+  ],
+  "limitations": [
+    "The coverage check uses nearest-chunk similarity, so it undercounts: an uncovered question that shares clinic words (e.g. a long telehealth question opening with 'first time at this clinic') can still score above 0.35. Treat the out-of-coverage rate as a floor."
+  ],
+  "skipped": [
+    {
+      "feature": "Refusal rate",
+      "type": "output",
+      "why": "needs generated answers (~20 model calls per window)"
+    },
+    {
+      "feature": "Answer length",
+      "type": "output",
+      "why": "needs generated answers"
+    },
+    {
+      "feature": "Correctness on 10 labelled current queries",
+      "type": "concept",
+      "why": "needs answers plus judge calls; dropped first under the API budget"
+    }
+  ]
+}

@@ -1,0 +1,246 @@
+{
+  "lane": "quality",
+  "total_cases": 8,
+  "passed": 6,
+  "failed": 2,
+  "failure_rate": 0.25,
+  "detailed_logs": [
+    {
+      "id": "G-1",
+      "role": "front_desk",
+      "question": "What is the cancellation fee?",
+      "expected_answer": "Patients must cancel at least 24 hours before their appointment. Late cancellations and no-shows are charged a 20 dollar fee.",
+      "answer": "Late cancellations and no‑shows are charged a **$20 fee**.",
+      "decision": "Allowed",
+      "tools_called": [
+        "retrieve_clinic_policy"
+      ],
+      "sources": [
+        "public/cancellation-and-no-show-policy-01",
+        "public/insurance-and-panel-plans-01",
+        "public/opening-hours-01",
+        "public/front-desk-handling-of-record-requests-01",
+        "public/vaccinations-01"
+      ],
+      "scores": {
+        "answer_relevancy": 1.0,
+        "faithfulness": 1.0,
+        "correctness": 1.0
+      },
+      "reasons": {
+        "answer_relevancy": "The score is 1.00 because the response directly addresses the question about the cancellation fee without any irrelevant content.",
+        "faithfulness": "The score is 1.00 because there are no contradictions between the actual output and the retrieval context.",
+        "correctness": "The actual output correctly states a $20 fee, matching the expected fee. No contradictions or missing required facts are present."
+      },
+      "passed": true,
+      "rules": "BR-10, BR-12"
+    },
+    {
+      "id": "G-2",
+      "role": "front_desk",
+      "question": "Is the clinic open on Saturday?",
+      "expected_answer": "Yes. The clinic is open on Saturday from 8:30am to 1:00pm. It is closed on Sundays and public holidays.",
+      "answer": "Yes. The clinic is open on Saturday from **8:30 am to 1:00 pm**.",
+      "decision": "Allowed",
+      "tools_called": [
+        "retrieve_clinic_policy"
+      ],
+      "sources": [
+        "public/opening-hours-01",
+        "public/vaccinations-01",
+        "public/cancellation-and-no-show-policy-01",
+        "public/insurance-and-panel-plans-01",
+        "public/clinic-overview-01"
+      ],
+      "scores": {
+        "answer_relevancy": 1.0,
+        "faithfulness": 1.0,
+        "correctness": 1.0
+      },
+      "reasons": {
+        "answer_relevancy": "The score is 1.00 because the response directly addresses the question about the clinic's Saturday hours without any irrelevant content.",
+        "faithfulness": "The score is 1.00 because there are no contradictions between the actual output and the retrieval context.",
+        "correctness": "The actual output correctly states the clinic is open on Saturday from 8:30am to 1:00pm, matching the expected time. It does not contradict any expected fact, and it provides all information requested by the question. The additional detail about Sundays and holidays in the expected output is not required, so no penalty is applied."
+      },
+      "passed": true,
+      "rules": "BR-10, BR-12"
+    },
+    {
+      "id": "G-3",
+      "role": "front_desk",
+      "question": "Which insurance plans do you accept?",
+      "expected_answer": "The clinic accepts AsterCare and Bluepeak panel plans. Patients show their member card at registration and the clinic files the claim.",
+      "answer": "The clinic accepts AsterCare and Bluepeak panel plans.",
+      "decision": "Allowed",
+      "tools_called": [
+        "retrieve_clinic_policy"
+      ],
+      "sources": [
+        "public/insurance-and-panel-plans-01",
+        "public/cancellation-and-no-show-policy-01",
+        "public/front-desk-handling-of-record-requests-01",
+        "public/clinic-overview-01",
+        "public/vaccinations-01"
+      ],
+      "scores": {
+        "answer_relevancy": 1.0,
+        "faithfulness": 1.0,
+        "correctness": 1.0
+      },
+      "reasons": {
+        "answer_relevancy": "The score is 1.00 because the response directly addresses the question about accepted insurance plans without including any irrelevant information.",
+        "faithfulness": "The score is 1.00 because there are no contradictions between the actual output and the retrieval context.",
+        "correctness": "The actual output correctly states the accepted insurance plans, matching the expected claim with no contradictions. The omission of the additional procedural details is permissible because the question only asked for the plans, so no penalty applies."
+      },
+      "passed": true,
+      "rules": "BR-10, BR-12"
+    },
+    {
+      "id": "G-4",
+      "role": "front_desk",
+      "question": "When can I walk in for a flu vaccine?",
+      "expected_answer": "Flu vaccines are walk-in, Monday to Friday from 2:00pm to 5:00pm.",
+      "answer": "Flu vaccines are available as walk‑ins Monday to Friday from **2:00 pm to 5:00 pm**.",
+      "decision": "Allowed",
+      "tools_called": [
+        "retrieve_clinic_policy"
+      ],
+      "sources": [
+        "public/vaccinations-01",
+        "public/opening-hours-01",
+        "public/cancellation-and-no-show-policy-01",
+        "public/insurance-and-panel-plans-01",
+        "public/front-desk-handling-of-record-requests-01"
+      ],
+      "scores": {
+        "answer_relevancy": 1.0,
+        "faithfulness": 1.0,
+        "correctness": 1.0
+      },
+      "reasons": {
+        "answer_relevancy": "The score is 1.00 because the response directly addresses the question about when to walk in for a flu vaccine, with no irrelevant statements. No higher score is needed as the answer is fully relevant and concise.",
+        "faithfulness": "The score is 1.00 because there are no contradictions between the actual output and the retrieval context.",
+        "correctness": "The actual output matches the expected output exactly in terms of clinic hours, days, and walk‑in status, with no contradictions or omissions."
+      },
+      "passed": true,
+      "rules": "BR-10, BR-12"
+    },
+    {
+      "id": "G-5",
+      "role": "front_desk",
+      "question": "What do parents need to bring for childhood vaccinations?",
+      "expected_answer": "Childhood vaccinations need an appointment, and parents should bring the child's health booklet.",
+      "answer": "Parents should bring the child’s health booklet.",
+      "decision": "Allowed",
+      "tools_called": [
+        "retrieve_clinic_policy"
+      ],
+      "sources": [
+        "public/vaccinations-01",
+        "public/clinic-overview-01",
+        "public/insurance-and-panel-plans-01",
+        "public/opening-hours-01",
+        "public/front-desk-handling-of-record-requests-01"
+      ],
+      "scores": {
+        "answer_relevancy": 1.0,
+        "faithfulness": 1.0,
+        "correctness": 0.8
+      },
+      "reasons": {
+        "answer_relevancy": "The score is 1.00 because the response directly addresses the question about what parents need to bring for childhood vaccinations, with no irrelevant content. The answer is fully relevant and concise, so it cannot be higher.",
+        "faithfulness": "The score is 1.00 because there are no contradictions between the actual output and the retrieval context.",
+        "correctness": "The response correctly states that parents should bring the child’s health booklet, matching the expected fact. However, it omits the required appointment detail, which is a fact directly asked for, resulting in a moderate penalty."
+      },
+      "passed": false,
+      "rules": "BR-10, BR-12"
+    },
+    {
+      "id": "G-6",
+      "role": "front_desk",
+      "question": "Can a patient reschedule without paying?",
+      "expected_answer": "Patients may reschedule once without charge if they give at least 24 hours' notice.",
+      "answer": "Yes. Patients may reschedule once without charge if they give at least 24 hours' notice.",
+      "decision": "Allowed",
+      "tools_called": [
+        "retrieve_clinic_policy"
+      ],
+      "sources": [
+        "public/cancellation-and-no-show-policy-01",
+        "public/insurance-and-panel-plans-01",
+        "public/front-desk-handling-of-record-requests-01",
+        "public/opening-hours-01",
+        "public/vaccinations-01"
+      ],
+      "scores": {
+        "answer_relevancy": 1.0,
+        "faithfulness": 1.0,
+        "correctness": 1.0
+      },
+      "reasons": {
+        "answer_relevancy": "The score is 1.00 because the response directly addresses the question about rescheduling without payment and contains no irrelevant statements.",
+        "faithfulness": "The score is 1.00 because there are no contradictions between the actual output and the retrieval context.",
+        "correctness": "The actual output contains the same factual claim about rescheduling once without charge and a 24‑hour notice, matching the expected output exactly. No contradictions or omissions are present, and the additional introductory “Yes.” does not affect the factual content."
+      },
+      "passed": true,
+      "rules": "BR-10, BR-12"
+    },
+    {
+      "id": "G-7",
+      "role": "clinician",
+      "question": "What is patient P-1003 allergic to?",
+      "expected_answer": "Daniel Koh (P-1003) is allergic to sulfa drugs.",
+      "answer": "Patient P-1003 is allergic to sulfa drugs.",
+      "decision": "Allowed",
+      "tools_called": [
+        "retrieve_patient_record"
+      ],
+      "sources": [
+        "clinical/patient-record-p-1003-01"
+      ],
+      "scores": {
+        "answer_relevancy": 1.0,
+        "faithfulness": 1.0,
+        "correctness": 0.8
+      },
+      "reasons": {
+        "answer_relevancy": "The score is 1.00 because the answer directly addresses the question about patient P-1003's allergy without any irrelevant content.",
+        "faithfulness": "The score is 1.00 because there are no contradictions between the actual output and the retrieval context.",
+        "correctness": "The actual output correctly states the allergy to sulfa drugs, matching the expected fact, but it omits the patient’s name Daniel Koh, which is a detail directly asked for. No contradictions are present, so the score is reduced only for the missing information."
+      },
+      "passed": false,
+      "rules": "BR-10, BR-12"
+    },
+    {
+      "id": "G-8",
+      "role": "clinician",
+      "question": "What medication is patient P-1001 on?",
+      "expected_answer": "Alex Tan (P-1001) is on metformin 500 mg, twice daily.",
+      "answer": "Patient P-1001 is on **metformin 500 mg, twice daily**.",
+      "decision": "Allowed",
+      "tools_called": [
+        "retrieve_patient_record"
+      ],
+      "sources": [
+        "clinical/patient-record-p-1001-01"
+      ],
+      "scores": {
+        "answer_relevancy": 1.0,
+        "faithfulness": 1.0,
+        "correctness": 1.0
+      },
+      "reasons": {
+        "answer_relevancy": "The score is 1.00 because the response directly addresses the question without any irrelevant content, providing a clear and concise answer.",
+        "faithfulness": "The score is 1.00 because there are no contradictions between the actual output and the retrieval context.",
+        "correctness": "The actual output correctly states the medication, dose, and frequency for patient P-1001, matching the expected information. No contradictions or omissions of required facts are present."
+      },
+      "passed": true,
+      "rules": "BR-10, BR-12"
+    }
+  ],
+  "metric_means": {
+    "answer_relevancy": 1.0,
+    "correctness": 0.95,
+    "faithfulness": 1.0
+  }
+}

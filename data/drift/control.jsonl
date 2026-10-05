@@ -1,0 +1,100 @@
+{"id": "con-001", "query": "Do you take AsterCare?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "con-002", "query": "What is the cancellation fee?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "con-003", "query": "Is the clinic open on Sunday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-004", "query": "Can I claim with AsterCare here?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "con-005", "query": "What are your opening hours?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-006", "query": "Is the clinic open on Saturday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-007", "query": "Hi, I'm calling on behalf of my elderly mother who has trouble getting around and I wanted to check something before we come in. can I claim with a panel plan here?", "role": "front_desk", "template_topic": "insurance", "long": true}
+{"id": "con-008", "query": "What is the cancellation fee?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "con-009", "query": "What happens if I miss my appointment?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "con-010", "query": "Pull up the record for Priya Nair.", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "con-011", "query": "When does registration close?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-012", "query": "Can I claim with a panel plan here?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "con-013", "query": "What time do you close on Friday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-014", "query": "Do you take AsterCare?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "con-015", "query": "When was P-1001's last visit?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "con-016", "query": "What time do you close on Thursday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-017", "query": "Do childhood vaccinations need an appointment?", "role": "front_desk", "template_topic": "vaccines", "long": false}
+{"id": "con-018", "query": "What are your opening hours?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-019", "query": "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. when can I walk in for a flu vaccine?", "role": "front_desk", "template_topic": "vaccines", "long": true}
+{"id": "con-020", "query": "When does registration close?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-021", "query": "When does registration close?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-022", "query": "Which insurance plans do you accept?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "con-023", "query": "When was P-1001's last visit?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "con-024", "query": "Do childhood vaccinations need an appointment?", "role": "front_desk", "template_topic": "vaccines", "long": false}
+{"id": "con-025", "query": "Which insurance plans do you accept?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "con-026", "query": "What medication is patient P-1001 on?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "con-027", "query": "What happens if I miss my appointment?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "con-028", "query": "What happens if I miss my appointment?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "con-029", "query": "How much notice do I need to cancel?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "con-030", "query": "When was P-1002's last visit?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "con-031", "query": "What medication is patient P-1003 on?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "con-032", "query": "Do you take Bluepeak?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "con-033", "query": "What is P-1002 allergic to?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "con-034", "query": "Are you open this weekend?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-035", "query": "Are you open tonight?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-036", "query": "Which insurance plans do you accept?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "con-037", "query": "What are your opening hours?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-038", "query": "Do you do flu shots on Wednesday?", "role": "front_desk", "template_topic": "vaccines", "long": false}
+{"id": "con-039", "query": "What do I need to bring to use my panel plan?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "con-040", "query": "What are your opening hours?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-041", "query": "Are you open after 8pm?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-042", "query": "Is there a no-show charge?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "con-043", "query": "What is the diagnosis for Daniel Koh?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "con-044", "query": "What is the cancellation fee?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "con-045", "query": "Do you take AsterCare?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "con-046", "query": "Which insurance plans do you accept?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "con-047", "query": "Do you take Bluepeak?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "con-048", "query": "Pull up the record for Daniel Koh.", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "con-049", "query": "Is the clinic open on Wednesday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-050", "query": "What do I need to bring to use my panel plan?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "con-051", "query": "Which insurance plans do you accept?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "con-052", "query": "What happens if I miss my appointment?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "con-053", "query": "What are your opening hours?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-054", "query": "When was P-1002's last visit?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "con-055", "query": "Is the clinic open on Sunday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-056", "query": "What do I need to bring to use my panel plan?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "con-057", "query": "What medication is patient P-1001 on?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "con-058", "query": "What time do you close on Wednesday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-059", "query": "What happens if I miss my appointment?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "con-060", "query": "I don't have a panel plan, how do I pay?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "con-061", "query": "Hi, I'm calling on behalf of my elderly mother who has trouble getting around and I wanted to check something before we come in. is the clinic open on Saturday?", "role": "front_desk", "template_topic": "hours", "long": true}
+{"id": "con-062", "query": "When was P-1001's last visit?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "con-063", "query": "What time do you close on Tuesday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-064", "query": "Is the clinic open on Saturday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-065", "query": "Do you take my company insurance?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "con-066", "query": "What happens if I miss my appointment?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "con-067", "query": "Do you take my company insurance?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "con-068", "query": "Is the clinic open on Sunday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-069", "query": "When was P-1001's last visit?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "con-070", "query": "What is the diagnosis for Priya Nair?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "con-071", "query": "Are you open this weekend?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-072", "query": "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. pull up the record for Priya Nair.", "role": "clinician", "template_topic": "clinical", "long": true}
+{"id": "con-073", "query": "What are your opening hours?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-074", "query": "I don't have a panel plan, how do I pay?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "con-075", "query": "Is the clinic open on Saturday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-076", "query": "Is the clinic open on Saturday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-077", "query": "What are your opening hours?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-078", "query": "Are you open this weekend?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-079", "query": "Do you take a panel plan?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "con-080", "query": "Pull up the record for Priya Nair.", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "con-081", "query": "How much notice do I need to cancel?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "con-082", "query": "When can I walk in for a flu vaccine?", "role": "front_desk", "template_topic": "vaccines", "long": false}
+{"id": "con-083", "query": "What is P-1001 allergic to?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "con-084", "query": "What do parents need to bring for childhood vaccinations?", "role": "front_desk", "template_topic": "vaccines", "long": false}
+{"id": "con-085", "query": "Can I claim with Bluepeak here?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "con-086", "query": "What is the cancellation fee?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "con-087", "query": "Is the clinic open on Monday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-088", "query": "When can I walk in for a flu vaccine?", "role": "front_desk", "template_topic": "vaccines", "long": false}
+{"id": "con-089", "query": "What is the cancellation fee?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "con-090", "query": "Can I get a flu jab without booking?", "role": "front_desk", "template_topic": "vaccines", "long": false}
+{"id": "con-091", "query": "What is the cancellation fee?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "con-092", "query": "Hi, I'm calling on behalf of my elderly mother who has trouble getting around and I wanted to check something before we come in. is the clinic open on Monday?", "role": "front_desk", "template_topic": "hours", "long": true}
+{"id": "con-093", "query": "What is P-1003 allergic to?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "con-094", "query": "What medication is patient P-1002 on?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "con-095", "query": "I don't have a panel plan, how do I pay?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "con-096", "query": "How much notice do I need to cancel?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "con-097", "query": "Are you open on a public holiday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "con-098", "query": "What is the diagnosis for Daniel Koh?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "con-099", "query": "What do I need to bring to use my panel plan?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "con-100", "query": "What are your opening hours?", "role": "front_desk", "template_topic": "hours", "long": false}

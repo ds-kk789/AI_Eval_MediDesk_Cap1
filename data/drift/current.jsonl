@@ -1,0 +1,100 @@
+{"id": "cur-001", "query": "What is P-1003 allergic to?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "cur-002", "query": "Hi, I'm calling on behalf of my elderly mother who has trouble getting around and I wanted to check something before we come in. when can I walk in for a flu vaccine?", "role": "front_desk", "template_topic": "vaccines", "long": true}
+{"id": "cur-003", "query": "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. is there a fee for a phone consultation?", "role": "front_desk", "template_topic": "telehealth", "long": true}
+{"id": "cur-004", "query": "Can I get a flu jab without booking?", "role": "front_desk", "template_topic": "vaccines", "long": false}
+{"id": "cur-005", "query": "How much notice do I need to cancel?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "cur-006", "query": "What is P-1002 allergic to?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "cur-007", "query": "When was P-1001's last visit?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "cur-008", "query": "Sorry to bother you, I tried the website and couldn't find it, and my employer needs to know by tomorrow, so quick question. when does registration close?", "role": "front_desk", "template_topic": "hours", "long": true}
+{"id": "cur-009", "query": "Sorry to bother you, I tried the website and couldn't find it, and my employer needs to know by tomorrow, so quick question. when can I walk in for a flu vaccine?", "role": "front_desk", "template_topic": "vaccines", "long": true}
+{"id": "cur-010", "query": "What happens if I miss my appointment?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "cur-011", "query": "Sorry to bother you, I tried the website and couldn't find it, and my employer needs to know by tomorrow, so quick question. pull up the record for Priya Nair.", "role": "clinician", "template_topic": "clinical", "long": true}
+{"id": "cur-012", "query": "Can I see the doctor online instead of coming in?", "role": "front_desk", "template_topic": "telehealth", "long": false}
+{"id": "cur-013", "query": "Sorry to bother you, I tried the website and couldn't find it, and my employer needs to know by tomorrow, so quick question. can I see the doctor online instead of coming in?", "role": "front_desk", "template_topic": "telehealth", "long": true}
+{"id": "cur-014", "query": "Do childhood vaccinations need an appointment?", "role": "front_desk", "template_topic": "vaccines", "long": false}
+{"id": "cur-015", "query": "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. do childhood vaccinations need an appointment?", "role": "front_desk", "template_topic": "vaccines", "long": true}
+{"id": "cur-016", "query": "What medication is patient P-1002 on?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "cur-017", "query": "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. pull up the record for Priya Nair.", "role": "clinician", "template_topic": "clinical", "long": true}
+{"id": "cur-018", "query": "What medication is patient P-1003 on?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "cur-019", "query": "Sorry to bother you, I tried the website and couldn't find it, and my employer needs to know by tomorrow, so quick question. when does registration close?", "role": "front_desk", "template_topic": "hours", "long": true}
+{"id": "cur-020", "query": "My child has a high fever and a rash after mosquito bites, can we walk in today?", "role": "front_desk", "template_topic": "dengue", "long": false}
+{"id": "cur-021", "query": "Hi, I'm calling on behalf of my elderly mother who has trouble getting around and I wanted to check something before we come in. do childhood vaccinations need an appointment?", "role": "front_desk", "template_topic": "vaccines", "long": true}
+{"id": "cur-022", "query": "Hi, I'm calling on behalf of my elderly mother who has trouble getting around and I wanted to check something before we come in. i don't have a panel plan, how do I pay?", "role": "front_desk", "template_topic": "insurance", "long": true}
+{"id": "cur-023", "query": "How do I book a telehealth appointment?", "role": "front_desk", "template_topic": "telehealth", "long": false}
+{"id": "cur-024", "query": "Hi, I'm calling on behalf of my elderly mother who has trouble getting around and I wanted to check something before we come in. what do I need to bring to use my panel plan?", "role": "front_desk", "template_topic": "insurance", "long": true}
+{"id": "cur-025", "query": "What is P-1002 allergic to?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "cur-026", "query": "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. what do I need to bring to use my panel plan?", "role": "front_desk", "template_topic": "insurance", "long": true}
+{"id": "cur-027", "query": "Can I get an MC from a teleconsult?", "role": "front_desk", "template_topic": "telehealth", "long": false}
+{"id": "cur-028", "query": "What time do you close on Tuesday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "cur-029", "query": "Is the clinic open on Saturday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "cur-030", "query": "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. are you open on Sunday morning?", "role": "front_desk", "template_topic": "hours", "long": true}
+{"id": "cur-031", "query": "Hi, I'm calling on behalf of my elderly mother who has trouble getting around and I wanted to check something before we come in. what medication is patient P-1003 on?", "role": "clinician", "template_topic": "clinical", "long": true}
+{"id": "cur-032", "query": "Hi, I'm calling on behalf of my elderly mother who has trouble getting around and I wanted to check something before we come in. can I get a flu jab without booking?", "role": "front_desk", "template_topic": "vaccines", "long": true}
+{"id": "cur-033", "query": "What is P-1002 allergic to?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "cur-034", "query": "When can I walk in for a flu vaccine?", "role": "front_desk", "template_topic": "vaccines", "long": false}
+{"id": "cur-035", "query": "How do I book a telehealth appointment?", "role": "front_desk", "template_topic": "telehealth", "long": false}
+{"id": "cur-036", "query": "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. when was P-1003's last visit?", "role": "clinician", "template_topic": "clinical", "long": true}
+{"id": "cur-037", "query": "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. do you test for dengue fever?", "role": "front_desk", "template_topic": "dengue", "long": true}
+{"id": "cur-038", "query": "When was P-1003's last visit?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "cur-039", "query": "Hi, I'm calling on behalf of my elderly mother who has trouble getting around and I wanted to check something before we come in. when was P-1001's last visit?", "role": "clinician", "template_topic": "clinical", "long": true}
+{"id": "cur-040", "query": "Hi, I'm calling on behalf of my elderly mother who has trouble getting around and I wanted to check something before we come in. what is the cancellation fee?", "role": "front_desk", "template_topic": "cancellation", "long": true}
+{"id": "cur-041", "query": "What is P-1001 allergic to?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "cur-042", "query": "How much notice do I need to cancel?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "cur-043", "query": "Can I claim with a panel plan here?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "cur-044", "query": "My child has a high fever and a rash after mosquito bites, can we walk in today?", "role": "front_desk", "template_topic": "dengue", "long": false}
+{"id": "cur-045", "query": "Sorry to bother you, I tried the website and couldn't find it, and my employer needs to know by tomorrow, so quick question. my child has a high fever and a rash after mosquito bites, can we walk in today?", "role": "front_desk", "template_topic": "dengue", "long": true}
+{"id": "cur-046", "query": "My child has a high fever and a rash after mosquito bites, can we walk in today?", "role": "front_desk", "template_topic": "dengue", "long": false}
+{"id": "cur-047", "query": "How much notice do I need to cancel?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "cur-048", "query": "Is there a dengue screening service at the clinic?", "role": "front_desk", "template_topic": "dengue", "long": false}
+{"id": "cur-049", "query": "How long is the wait for a dengue blood test?", "role": "front_desk", "template_topic": "dengue", "long": false}
+{"id": "cur-050", "query": "Are you open after 8pm?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "cur-051", "query": "Is there a fee for a phone consultation?", "role": "front_desk", "template_topic": "telehealth", "long": false}
+{"id": "cur-052", "query": "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. what is the diagnosis for Priya Nair?", "role": "clinician", "template_topic": "clinical", "long": true}
+{"id": "cur-053", "query": "Hi, I'm calling on behalf of my elderly mother who has trouble getting around and I wanted to check something before we come in. can I claim with Bluepeak here?", "role": "front_desk", "template_topic": "insurance", "long": true}
+{"id": "cur-054", "query": "What is the diagnosis for Daniel Koh?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "cur-055", "query": "Sorry to bother you, I tried the website and couldn't find it, and my employer needs to know by tomorrow, so quick question. can I claim with AsterCare here?", "role": "front_desk", "template_topic": "insurance", "long": true}
+{"id": "cur-056", "query": "Sorry to bother you, I tried the website and couldn't find it, and my employer needs to know by tomorrow, so quick question. is there a fee for a phone consultation?", "role": "front_desk", "template_topic": "telehealth", "long": true}
+{"id": "cur-057", "query": "Pull up the record for Daniel Koh.", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "cur-058", "query": "What is P-1001 allergic to?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "cur-059", "query": "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. when was P-1001's last visit?", "role": "clinician", "template_topic": "clinical", "long": true}
+{"id": "cur-060", "query": "Do you do flu shots on Saturday?", "role": "front_desk", "template_topic": "vaccines", "long": false}
+{"id": "cur-061", "query": "Is the clinic open on Saturday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "cur-062", "query": "Can a patient reschedule without paying?", "role": "front_desk", "template_topic": "cancellation", "long": false}
+{"id": "cur-063", "query": "Do you offer video consultations?", "role": "front_desk", "template_topic": "telehealth", "long": false}
+{"id": "cur-064", "query": "Hi, I'm calling on behalf of my elderly mother who has trouble getting around and I wanted to check something before we come in. is the clinic open on Wednesday?", "role": "front_desk", "template_topic": "hours", "long": true}
+{"id": "cur-065", "query": "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. can I get an MC from a teleconsult?", "role": "front_desk", "template_topic": "telehealth", "long": true}
+{"id": "cur-066", "query": "Which insurance plans do you accept?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "cur-067", "query": "Do you do flu shots on Monday?", "role": "front_desk", "template_topic": "vaccines", "long": false}
+{"id": "cur-068", "query": "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. do childhood vaccinations need an appointment?", "role": "front_desk", "template_topic": "vaccines", "long": true}
+{"id": "cur-069", "query": "Hi, I'm calling on behalf of my elderly mother who has trouble getting around and I wanted to check something before we come in. do you offer video consultations?", "role": "front_desk", "template_topic": "telehealth", "long": true}
+{"id": "cur-070", "query": "Hi, I'm calling on behalf of my elderly mother who has trouble getting around and I wanted to check something before we come in. what time do you close on Thursday?", "role": "front_desk", "template_topic": "hours", "long": true}
+{"id": "cur-071", "query": "Hi, I'm calling on behalf of my elderly mother who has trouble getting around and I wanted to check something before we come in. can I get an MC from a teleconsult?", "role": "front_desk", "template_topic": "telehealth", "long": true}
+{"id": "cur-072", "query": "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. do you offer video consultations?", "role": "front_desk", "template_topic": "telehealth", "long": true}
+{"id": "cur-073", "query": "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. can I get an MC from a teleconsult?", "role": "front_desk", "template_topic": "telehealth", "long": true}
+{"id": "cur-074", "query": "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. do childhood vaccinations need an appointment?", "role": "front_desk", "template_topic": "vaccines", "long": true}
+{"id": "cur-075", "query": "What do parents need to bring for childhood vaccinations?", "role": "front_desk", "template_topic": "vaccines", "long": false}
+{"id": "cur-076", "query": "Is the clinic open on Saturday?", "role": "front_desk", "template_topic": "hours", "long": false}
+{"id": "cur-077", "query": "Sorry to bother you, I tried the website and couldn't find it, and my employer needs to know by tomorrow, so quick question. when can I walk in for a flu vaccine?", "role": "front_desk", "template_topic": "vaccines", "long": true}
+{"id": "cur-078", "query": "When can I walk in for a flu vaccine?", "role": "front_desk", "template_topic": "vaccines", "long": false}
+{"id": "cur-079", "query": "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. pull up the record for Daniel Koh.", "role": "clinician", "template_topic": "clinical", "long": true}
+{"id": "cur-080", "query": "My child has a high fever and a rash after mosquito bites, can we walk in today?", "role": "front_desk", "template_topic": "dengue", "long": false}
+{"id": "cur-081", "query": "Can I get an MC from a teleconsult?", "role": "front_desk", "template_topic": "telehealth", "long": false}
+{"id": "cur-082", "query": "Should I come in if I think I have dengue?", "role": "front_desk", "template_topic": "dengue", "long": false}
+{"id": "cur-083", "query": "Do childhood vaccinations need an appointment?", "role": "front_desk", "template_topic": "vaccines", "long": false}
+{"id": "cur-084", "query": "Pull up the record for Daniel Koh.", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "cur-085", "query": "Do you take AsterCare?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "cur-086", "query": "Which insurance plans do you accept?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "cur-087", "query": "Sorry to bother you, I tried the website and couldn't find it, and my employer needs to know by tomorrow, so quick question. what time do you close on Tuesday?", "role": "front_desk", "template_topic": "hours", "long": true}
+{"id": "cur-088", "query": "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. is there a dengue screening service at the clinic?", "role": "front_desk", "template_topic": "dengue", "long": true}
+{"id": "cur-089", "query": "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. how do I book a telehealth appointment?", "role": "front_desk", "template_topic": "telehealth", "long": true}
+{"id": "cur-090", "query": "Is there a fee for a phone consultation?", "role": "front_desk", "template_topic": "telehealth", "long": false}
+{"id": "cur-091", "query": "Hi, I'm calling on behalf of my elderly mother who has trouble getting around and I wanted to check something before we come in. is the clinic open on Wednesday?", "role": "front_desk", "template_topic": "hours", "long": true}
+{"id": "cur-092", "query": "Do childhood vaccinations need an appointment?", "role": "front_desk", "template_topic": "vaccines", "long": false}
+{"id": "cur-093", "query": "Hi, I'm calling on behalf of my elderly mother who has trouble getting around and I wanted to check something before we come in. what is the cancellation fee?", "role": "front_desk", "template_topic": "cancellation", "long": true}
+{"id": "cur-094", "query": "Sorry to bother you, I tried the website and couldn't find it, and my employer needs to know by tomorrow, so quick question. what medication is patient P-1003 on?", "role": "clinician", "template_topic": "clinical", "long": true}
+{"id": "cur-095", "query": "What do I need to bring to use my panel plan?", "role": "front_desk", "template_topic": "insurance", "long": false}
+{"id": "cur-096", "query": "Sorry to bother you, I tried the website and couldn't find it, and my employer needs to know by tomorrow, so quick question. which insurance plans do you accept?", "role": "front_desk", "template_topic": "insurance", "long": true}
+{"id": "cur-097", "query": "Can I get an MC from a teleconsult?", "role": "front_desk", "template_topic": "telehealth", "long": false}
+{"id": "cur-098", "query": "Hi, I'm calling on behalf of my elderly mother who has trouble getting around and I wanted to check something before we come in. pull up the record for Priya Nair.", "role": "clinician", "template_topic": "clinical", "long": true}
+{"id": "cur-099", "query": "What is the diagnosis for Priya Nair?", "role": "clinician", "template_topic": "clinical", "long": false}
+{"id": "cur-100", "query": "Hello, we just moved to the area, it's our first time at this clinic and I have a few questions, starting with this one. what is P-1002 allergic to?", "role": "clinician", "template_topic": "clinical", "long": true}

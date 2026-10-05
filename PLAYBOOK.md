@@ -1,8 +1,15 @@
 # Playbook
 
-Planned run order once the stubs are implemented. LLM budget is about 30
-calls a day, so every model answer and judge verdict is cached under
-`reports/_cache/` and `reports/_judge_cache/`.
+Run order for the full end-to-end evaluation. Every model answer and judge
+verdict is cached under `reports/_cache/` and `reports/_judge_cache/`, so a
+re-run only pays for what changed (delete a cache file to force a fresh
+call). Groq's free tier allows about 200k tokens per key per day; when
+`GROQ_API_KEY` runs out, every call site switches to `GROQ_API_KEY_2`.
+
+Sampling: by default the model lanes run a sample (`SECURITY_SAMPLE_PER_CATEGORY=2`,
+`QUALITY_SAMPLE_SIZE=3`, `ADK_SAMPLE_SIZE=2`). Set them to `0` for every case.
+Calls are spaced `LLM_PACE_SECONDS=30` apart to stay under Groq's per-minute
+limit.
 
 ## Setup
 
@@ -37,13 +44,17 @@ listening on 8003.
 
 ## 2. Run v1 and freeze the baseline
 
-```bash
-pytest tests/rbac tests/audit
-pytest tests/security
-pytest tests/quality
-python run_adk_eval.py
-python regression_check.py --promote
-```
+| Step | Command | Model calls (full set) |
+|---|---|---|
+| RBAC + audit | `pytest tests/rbac tests/audit` | 3 (the 200 cells) |
+| Security | `pytest tests/security` | ~15–30 |
+| Quality | `pytest tests/quality` | 8 answers + ~70 judge |
+| Agent | `python run_adk_eval.py` | ~7–14 |
+| Freeze | `python regression_check.py --promote` | 0 |
+| Compare | `python regression_check.py` | 0 |
+
+`--promote` refuses while another hard gate check fails (only an approved
+run may become the baseline); `--force` overrides on purpose.
 
 ## 3. Make the v2 change and check for regressions
 
@@ -77,7 +88,9 @@ on every view) so the layout can be judged before the lanes run.
 
 ## Budget order
 
-1. RBAC, retrieval boundary, audit, input drift: no LLM calls.
-2. v1 quality (cached), then v2 quality.
-3. Security lane (sampled with `SECURITY_SAMPLE_PER_CATEGORY`).
-4. Output and concept drift samples last. Drop the concept-drift labelled sample first if out of budget.
+1. RBAC, retrieval boundary, audit, drift: no or almost no LLM calls. Drift
+   runs fully locally; the answer-based drift signals (refusal rate, answer
+   length, labelled correctness) are listed as skipped in its report.
+2. Security (all 15 attacks; it's the critical lane).
+3. v1 quality (cached), then the agent lane.
+4. The v2 rerun for the regression demo costs the same again.
