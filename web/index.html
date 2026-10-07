@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MediDesk</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Sign-in stand-in: each card holds a dev API key; the role comes from GET /me -->
+<section id="signin" class="signin">
+  <div class="signin-box panel">
+    <div class="brand">
+      <span class="mark" aria-hidden="true"></span>
+      <div><b>MediDesk</b><small>Kestrel Family Clinic</small></div>
+    </div>
+    <div>
+      <h1>Sign in</h1>
+      <p class="muted">Pick a staff account. Demo sign-in: each card holds a development API key, and the server decides the role from that key.</p>
+    </div>
+    <div class="staff" id="staff"></div>
+    <details class="otherkey">
+      <summary>Use another API key</summary>
+      <form id="key-form" autocomplete="off">
+        <label for="key-input" class="muted">API key</label>
+        <div class="ask">
+          <input id="key-input" type="password" placeholder="X-API-Key value">
+          <button class="btn" type="submit">Sign in</button>
+        </div>
+      </form>
+    </details>
+    <p class="error-box" id="signin-err" role="alert" hidden></p>
+    <p class="hint">API: <span class="mono" id="api-base"></span> · All patients are synthetic.</p>
+  </div>
+</section>
+
+<div class="app" id="app" hidden>
+  <aside class="rail">
+    <div class="brand">
+      <span class="mark" aria-hidden="true"></span>
+      <div><b>MediDesk</b><small>Kestrel Family Clinic</small></div>
+    </div>
+    <nav class="nav" aria-label="Main">
+      <button type="button" data-view="assistant">Assistant</button>
+      <button type="button" data-view="patients">Patient lookup <span class="lock" id="nav-lock">LOCKED</span></button>
+      <button type="button" data-view="audit">Audit log</button>
+      <button type="button" data-view="health">Release health</button>
+    </nav>
+    <div class="rail-foot">
+      <p><span class="pill" id="mode-pill"></span></p>
+      <p>All patients are synthetic.</p>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <h1 id="view-title">Assistant</h1>
+        <p class="sub" id="view-sub"></p>
+      </div>
+      <div class="rolebox">
+        <div class="who">
+          <span class="avatar" id="who-av"></span>
+          <span><span id="who-name"></span><br><span class="pill" id="who-role"></span></span>
+        </div>
+        <button type="button" class="btn ghost" id="signout">Sign out</button>
+      </div>
+    </header>
+
+    <p class="demo-note" id="replay-note" hidden>Replay mode: answers come from the recorded end-to-end run, so no model is called. Pick a suggested question; anything else returns 503. Patient lookup, audit and release health are live.</p>
+
+    <!-- Assistant -->
+    <section id="view-assistant" class="assist" hidden>
+      <div class="panel chat">
+        <div class="chat-head">
+          <span><b id="chat-title">Ask about clinic policy</b> <span class="muted mono" id="endpoint-label"></span></span>
+          <button type="button" class="btn ghost" id="clear-chat">New chat</button>
+        </div>
+        <div class="log" id="log" aria-live="polite"></div>
+        <div class="composer">
+          <div class="chips" id="chips"></div>
+          <form class="ask" id="ask-form" autocomplete="off">
+            <input id="q" name="q" aria-label="Question" maxlength="2000" placeholder="Ask about hours, cancellations, insurance, vaccinations…">
+            <button class="btn" type="submit" id="ask-btn">Ask</button>
+          </form>
+        </div>
+      </div>
+
+      <aside class="panel inspector" aria-label="Why this answer">
+        <div class="scope" id="scope">
+          <b id="scope-title"></b>
+          <span id="scope-text"></span>
+        </div>
+        <h2>Sources for the last answer</h2>
+        <div class="sources" id="sources"></div>
+        <h2>Checks on this request</h2>
+        <ul class="checks" id="checks"></ul>
+      </aside>
+    </section>
+
+    <!-- Patient lookup -->
+    <section id="view-patients" class="lookup" hidden>
+      <div class="panel locked" id="lookup-locked">
+        <span class="pill deny">Clinicians only</span>
+        <h2>Patient records are not available at the front desk</h2>
+        <p>Your role can see clinic policy only. If a patient needs help with their record, ask the duty clinician. This page never says whether a patient exists.</p>
+        <p>The lock above is only the screen. To see that the server enforces it, ask it directly with your key:</p>
+        <button type="button" class="btn ghost" id="probe-btn">Ask the server for P-1003 and P-9999</button>
+        <div id="probe-out"></div>
+      </div>
+      <div id="lookup-open" hidden>
+        <div class="panel">
+          <form class="searchrow" id="lookup-form" autocomplete="off">
+            <label for="pid" class="muted">Patient ID or full name</label>
+            <input id="pid" placeholder="P-1003">
+            <button class="btn" type="submit">Open record</button>
+          </form>
+          <div class="chips quick" id="quick-ids"></div>
+          <p class="error" id="lookup-err" role="alert" hidden></p>
+        </div>
+        <div class="panel patient" id="patient-card" hidden></div>
+      </div>
+    </section>
+
+    <!-- Audit -->
+    <section id="view-audit" class="panel" hidden>
+      <div class="toolbar">
+        <p id="audit-scope"></p>
+        <div class="toolbar-r">
+          <div class="seg" role="group" aria-label="Filter">
+            <button type="button" id="f-all" aria-pressed="true">All</button>
+            <button type="button" id="f-deny" aria-pressed="false">Denied only</button>
+          </div>
+          <button type="button" class="btn ghost" id="audit-refresh">Refresh</button>
+        </div>
+      </div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Time</th><th>Role</th><th>Request</th><th class="num">Status</th><th>Tools</th><th>Chunks retrieved</th><th>Decision</th><th class="num">Latency</th></tr></thead>
+          <tbody id="audit-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Release health -->
+    <section id="view-health" class="health" hidden></section>
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

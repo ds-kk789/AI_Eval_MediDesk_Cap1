@@ -1,8 +1,8 @@
 {
   "lane": "backend_smoke",
-  "generated_at": "05 Oct 2026, 10:15 UTC",
-  "total_cases": 31,
-  "passed": 31,
+  "generated_at": "06 Oct 2026, 06:55 UTC",
+  "total_cases": 39,
+  "passed": 39,
   "failed": 0,
   "rules_covered": [
     "BR-1",
@@ -18,16 +18,17 @@
     "BR-13"
   ],
   "traffic": {
-    "requests": 16,
+    "requests": 22,
     "by_decision": {
-      "Denied": 7,
+      "Denied": 9,
       "Invalid": 1,
-      "Allowed": 6,
-      "No match": 2
+      "Allowed": 7,
+      "No match": 2,
+      "Error": 3
     },
     "chunks_by_role": {
       "front_desk": {
-        "public": 10,
+        "public": 11,
         "clinical": 0
       },
       "clinician": {
@@ -77,7 +78,7 @@
       "check": "/me: front desk sees public only, one tool",
       "rule": "BR-1",
       "passed": true,
-      "evidence": "{'role': 'front_desk', 'visibilities': ['public'], 'endpoints': ['/ask'], 'tools': ['retrieve_clinic_policy']}"
+      "evidence": "{'role': 'front_desk', 'visibilities': ['public'], 'endpoints': ['/ask'], 'tools': ['retrieve_clinic_policy'], 'mode': 'live', 'replay_questions': []}"
     },
     {
       "area": "Front desk",
@@ -192,11 +193,67 @@
       "evidence": ""
     },
     {
+      "area": "Replay",
+      "check": "/me lists recorded questions for the caller's role only",
+      "rule": "BR-1",
+      "passed": true,
+      "evidence": "[{'question': 'What is the cancellation fee?', 'kind': 'golden'}]"
+    },
+    {
+      "area": "Replay",
+      "check": "Recorded question replayed, no model call",
+      "rule": "-",
+      "passed": true,
+      "evidence": "Recorded: the fee is 20 dollars."
+    },
+    {
+      "area": "Replay",
+      "check": "Tampered recording: clinical chunk dropped for front desk",
+      "rule": "BR-5",
+      "passed": true,
+      "evidence": "['public/cancellation-and-no-show-policy-01']"
+    },
+    {
+      "area": "Replay",
+      "check": "Unrecorded question → 503, not a made-up answer",
+      "rule": "-",
+      "passed": true,
+      "evidence": "503"
+    },
+    {
+      "area": "Replay",
+      "check": "Front desk can't replay a clinician's recording",
+      "rule": "BR-1",
+      "passed": true,
+      "evidence": "503"
+    },
+    {
+      "area": "Replay",
+      "check": "RBAC-* recordings (pre-reasoning-fix) are skipped",
+      "rule": "-",
+      "passed": true,
+      "evidence": "503"
+    },
+    {
+      "area": "Replay",
+      "check": "Front desk on /clinical/ask still 403",
+      "rule": "BR-3",
+      "passed": true,
+      "evidence": "403"
+    },
+    {
+      "area": "Replay",
+      "check": "Replayed bulk refusal classified Denied",
+      "rule": "BR-7",
+      "passed": true,
+      "evidence": "Denied"
+    },
+    {
       "area": "Audit",
       "check": "Front desk sees front-desk lines only",
       "rule": "BR-13",
       "passed": true,
-      "evidence": "7 lines"
+      "evidence": "12 lines"
     },
     {
       "area": "Audit",
@@ -221,7 +278,7 @@
     },
     {
       "area": "Audit",
-      "check": "All 16 lines have exactly the required fields",
+      "check": "All 22 lines have exactly the required fields",
       "rule": "BR-13",
       "passed": true,
       "evidence": ""

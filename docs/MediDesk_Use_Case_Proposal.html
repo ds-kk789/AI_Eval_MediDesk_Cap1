@@ -1,4 +1,26 @@
-# MediDesk: Clinic Patient-Info Assistant — Use Case Proposal
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MediDesk Use Case Proposal</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<style>
+:root{--bg:#fff;--fg:#1f2933;--mut:#616e7c;--line:#d9e2ec;--accent:#0b6e99;--code:#f0f4f8;--th:#e8f1f6}
+@media(prefers-color-scheme:dark){:root{--bg:#14181d;--fg:#e4e9ee;--mut:#9aa5b1;--line:#2d3640;--accent:#5bb8e0;--code:#1e252d;--th:#1b2a35}}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:980px;margin:0 auto;padding:32px 16px 80px}
+h1{font-size:2rem;border-bottom:3px solid var(--accent);padding-bottom:.4rem}
+h2{margin-top:2.6rem;padding-bottom:.3rem;border-bottom:1px solid var(--line);color:var(--accent)}
+h3{margin-top:1.8rem}
+a{color:var(--accent)}
+code{background:var(--code);padding:.1em .35em;border-radius:4px;font-size:.9em}
+pre{background:var(--code);padding:14px;border-radius:8px;overflow-x:auto}pre code{background:none;padding:0}
+.tw{overflow-x:auto;margin:1rem 0}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+th{background:var(--th)}tr:nth-child(even) td{background:color-mix(in srgb,var(--code) 50%,transparent)}
+.mermaid{background:var(--code);border-radius:8px;padding:16px;text-align:center;overflow-x:auto;margin:1rem 0}
+.math{overflow-x:auto;padding:8px 0}
+</style></head><body><main id="out">Loading…</main>
+<script id="src" type="text/markdown"># MediDesk: Clinic Patient-Info Assistant — Use Case Proposal
 
 Exported from the [live doc](https://claude.ai/code/artifact/2df5968b-e698-494c-9771-0a012ce9a0dc) on 5 Oct 2026. The live doc is the source of truth.
 
@@ -288,3 +310,22 @@ The build takes about 9 hours by reusing the existing HR-assistant project struc
 - LLM budget is about 30 calls a day, so the golden set stays small and model answers and judge verdicts are cached.
 - Embeddings run locally (MiniLM + FAISS) to avoid API calls.
 - "Prod-ready" here means the engineering practices (auth, least privilege, audit, pinned dependencies, CI gate), not production scale.
+</script>
+<script src="https://cdn.jsdelivr.net/npm/marked@14/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+const out=document.getElementById("out");
+const r=new marked.Renderer();
+r.code=(tok)=>{const c=tok.text,l=tok.lang;
+ if(l==="mermaid")return `<div class="mermaid">${c.replace(/&/g,"&amp;").replace(/</g,"&lt;")}</div>`;
+ if(l==="latex")return `<div class="math">${katex.renderToString(c,{displayMode:true,throwOnError:false})}</div>`;
+ return `<pre><code>${c.replace(/&/g,"&amp;").replace(/</g,"&lt;")}</code></pre>`};
+r.table=function(t){let h="<table><thead><tr>"+t.header.map(c=>"<th>"+this.parser.parseInline(c.tokens)+"</th>").join("")+"</tr></thead><tbody>"+
+ t.rows.map(row=>"<tr>"+row.map(c=>"<td>"+this.parser.parseInline(c.tokens)+"</td>").join("")+"</tr>").join("")+"</tbody></table>";return `<div class="tw">${h}</div>`};
+marked.use({renderer:r});
+out.innerHTML=marked.parse(document.getElementById("src").textContent);
+const dark=matchMedia("(prefers-color-scheme: dark)").matches;
+mermaid.initialize({startOnLoad:false,theme:dark?"dark":"default"});
+await mermaid.run({querySelector:".mermaid"});
+</script></body></html>

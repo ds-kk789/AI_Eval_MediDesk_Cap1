@@ -6,10 +6,11 @@ project it is modelled on, the interesting part is not the chatbot. It is the
 evaluation harness that proves the front desk never sees patient data, and
 the gate that blocks a release when that proof fails.
 
-> **Status: backend and eval harness implemented; first live run passed the
-> gate (5 Oct 2026).** `backend/`, `medidesk_agent/`, every eval lane, the
-> regression and drift checks, the release gate and the evaluation dashboard
-> (`reports/evaluation_report.html`) are built. The web app is next.
+> **Status: backend, eval harness and web app implemented; first live run
+> passed the gate (5 Oct 2026).** `backend/`, `medidesk_agent/`, every eval
+> lane, the regression and drift checks, the release gate, the evaluation
+> dashboard (`reports/evaluation_report.html`) and the staff web app (`web/`)
+> are built.
 
 **Problem statement:** How do we let an AI assistant help clinic staff
 without it ever leaking patient records, and prove that before it ships?
@@ -51,12 +52,40 @@ Eval lanes ──► reports/*.json ──► regression_check.py ──► qual
 drift_check.py runs beside the pipeline: alerts only, never blocks.
 ```
 
+## Web app
+
+```bash
+python run_web.py          # replay mode: no model calls, no LLM key needed
+python run_web.py --live   # /ask calls the model (uses the Groq budget)
+```
+
+Opens the API on `http://127.0.0.1:8003` and the web app on
+`http://127.0.0.1:8080`. Plain HTML/CSS/JS in `web/`, no build step, styled
+after the mock. Sign in with a demo staff card (each holds a dev API key) or
+paste a key; the role shown comes from `GET /me`, and the key is kept in
+`sessionStorage` (closing the tab signs out).
+
+| Screen | Endpoint | Notes |
+|---|---|---|
+| Assistant | `POST /ask` (front desk), `POST /clinical/ask` (clinician) | Answer, decision, sources with visibility, per-request checks |
+| Patient lookup | `GET /clinical/patients/{id}` | Clinicians only; front desk can ask the server and see the same 403 for an existing and a missing patient |
+| Audit log | `GET /audit` | Front desk sees its own lines only |
+| Release health | `GET /release/health` | Gate, lane tiles, regression and drift from the committed reports |
+
+**Replay mode** (default for `run_web.py`, or `MEDIDESK_REPLAY=1`): the two ask
+routes answer from the responses recorded by the e2e run in `reports/_cache/`
+instead of calling the model, and `run_web.py` blanks the LLM keys in that
+process. Auth, the per-role visibility re-check, the decision label and the
+audit line still run for real (`backend/replay.py`). Questions that weren't
+recorded for the caller's role get a 503; the recorded ones show as chips.
+Patient lookup, audit and release health never call a model in either mode.
+
 ## API
 
 | Route | Who | What |
 |---|---|---|
 | `GET /` | anyone | Health check; `message` contains "MediDesk" (conftest checks it) |
-| `GET /me` | any valid key | Role, visibilities, endpoints and tools for that key |
+| `GET /me` | any valid key | Role, visibilities, endpoints and tools for that key; `mode` (live/replay) and, in replay, the recorded questions for that role |
 | `POST /ask` | any valid key | Runs the caller's role agent |
 | `POST /clinical/ask` | clinician (403 otherwise) | Same, with the patient-record tool |
 | `GET /clinical/patients/{id}` | clinician (403 otherwise) | Exact record lookup by ID or full name, no LLM; 404 if none |
@@ -82,7 +111,7 @@ Enforcement beyond the 401/403:
 
 | Part | Used by | Role |
 |---|---|---|
-| MediDesk web app | Front desk, clinicians | The only client UI |
+| MediDesk web app (`web/`) | Front desk, clinicians | The only client UI |
 | FastAPI | Web app, test lanes | Production API: API key → role, 401/403, runs the agent, audit log |
 | ADK agent | FastAPI, `adk eval` | Decides which RAG tool to call |
 | FastAPI `/docs`, `adk web` | Developers only | Debugging; `adk web` bypasses auth, so never for clients |
@@ -104,8 +133,10 @@ Enforcement beyond the 401/403:
 `=` copied unchanged from the HR project · `~` same role, clinic content · `+` new
 
 ```
-backend/          config ~  auth ~  llm =  rag_pipeline ~  audit +  main ~
+backend/          config ~  auth ~  llm =  rag_pipeline ~  audit +  main ~  replay +
 medidesk_agent/   agent ~ (per-role tools)
+web/              staff web app: index.html, styles.css, app.js +
+run_web.py        starts the API and serves web/ (replay by default) +
 evalsets/         *_config.json =  evalsets TODO
 tests/            conftest ~  rbac ~  security ~  quality (groq_judge =)  audit +
 data/drift/       reference / control / current windows +

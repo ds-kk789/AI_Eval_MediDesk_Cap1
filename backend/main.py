@@ -17,6 +17,9 @@ Routes:
     GET  /audit                     recent audit lines (front desk: own role only)
     GET  /release/health            lane, regression and drift report summaries
 
+MEDIDESK_REPLAY=1 answers the two ask routes from the recorded e2e responses
+instead of calling the model (backend/replay.py); everything else is live.
+
 ADK's own `adk api_server` / `adk web` are not used here: they know nothing
 about API keys, roles or the audit log.
 """
@@ -34,7 +37,7 @@ from google.adk.sessions import InMemorySessionService
 from google.genai import types
 from pydantic import BaseModel, Field
 
-from backend import audit, config
+from backend import audit, config, replay
 from backend.auth import allowed_visibilities, require_clinician, resolve_role
 from medidesk_agent.agent import (
     BULK_BLOCKED_KEY,
@@ -150,6 +153,9 @@ def _runner(role):
 
 async def run_agent(role, question):
     """One fresh session per request; returns answer, tools and chunk refs."""
+    if config.REPLAY_MODE:
+        return replay.run(role, question)
+
     runner = _runner(role)
     session_id = str(uuid.uuid4())
 
@@ -294,6 +300,7 @@ async def _answer(request, role, question):
         "sources": sources,
         "retrieved_context": [s["text"] for s in sources],
         "latency_ms": int((time.perf_counter() - started) * 1000),
+        "replayed": config.REPLAY_MODE,
     }
 
 
@@ -308,6 +315,8 @@ def home():
     return {
         "message": "MediDesk Clinic Assistant is running",
         "roles": sorted(config.ROLE_VISIBILITY),
+        # conftest refuses to grade a replay server: its answers are recorded.
+        "mode": "replay" if config.REPLAY_MODE else "live",
     }
 
 
@@ -324,6 +333,9 @@ def me(role: str = Depends(resolve_role)):
             if clinician
             else ["retrieve_clinic_policy"]
         ),
+        # The web app shows the recorded questions as chips in replay mode.
+        "mode": "replay" if config.REPLAY_MODE else "live",
+        "replay_questions": replay.questions(role) if config.REPLAY_MODE else [],
     }
 
 

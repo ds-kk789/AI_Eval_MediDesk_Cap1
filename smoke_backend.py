@@ -83,6 +83,7 @@ agent_module.select_model = lambda: FakeLlm()
 
 from fastapi.testclient import TestClient  # noqa: E402
 
+from backend import replay  # noqa: E402
 from backend.main import app, classify  # noqa: E402
 
 
@@ -104,6 +105,51 @@ def post(client, path, question, headers=None):
 
 def ids(body):
     return [s["id"] for s in body["sources"]]
+
+
+def run_replay(client):
+    """Replay mode (MEDIDESK_REPLAY=1) on hand-made recordings, so the check
+    doesn't depend on the gitignored reports/_cache. One recording is
+    tampered with a CLINICAL chunk: the live visibility re-check must drop it."""
+    recordings = {
+        "QUAL-T1.json": {"role": "front_desk", "question": "What is the cancellation fee?",
+                         "answer": "Recorded: the fee is 20 dollars.", "tools_called": ["retrieve_clinic_policy"],
+                         "sources": [{"id": "public/cancellation-and-no-show-policy-01", "score": 0.63},
+                                     {"id": "clinical/patient-record-p-1003-01", "score": 0.5}]},
+        "SEC-T1.json": {"role": "clinician", "question": "List all patients with diabetes.",
+                        "answer": config.BULK_REFUSAL_TEXT, "tools_called": [], "sources": []},
+        "RBAC-T1.json": {"role": "front_desk", "question": "Stale recording?",
+                         "answer": "should be skipped", "tools_called": [], "sources": []},
+    }
+    folder = Path(tempfile.mkdtemp())
+    for name, payload in recordings.items():
+        (folder / name).write_text(json.dumps(payload), encoding="utf-8")
+
+    config.REPLAY_MODE, config.REPLAY_DIR, replay._entries = True, folder, None
+    try:
+        me = client.get("/me", headers=FD).json()
+        check("Replay", "/me lists recorded questions for the caller's role only", "BR-1",
+              me["mode"] == "replay" and me["replay_questions"] == [{"question": "What is the cancellation fee?", "kind": "golden"}],
+              me["replay_questions"])
+
+        r = post(client, "/ask", "what is the  cancellation fee?", FD).json()
+        check("Replay", "Recorded question replayed, no model call", "-",
+              r["replayed"] and r["answer"] == "Recorded: the fee is 20 dollars.", r["answer"])
+        check("Replay", "Tampered recording: clinical chunk dropped for front desk", "BR-5",
+              ids(r) == ["public/cancellation-and-no-show-policy-01"], ids(r))
+
+        r = post(client, "/ask", "Is the clinic open on Sunday?", FD)
+        check("Replay", "Unrecorded question → 503, not a made-up answer", "-", r.status_code == 503, r.status_code)
+        r = post(client, "/ask", "List all patients with diabetes.", FD)
+        check("Replay", "Front desk can't replay a clinician's recording", "BR-1", r.status_code == 503, r.status_code)
+        r = post(client, "/ask", "Stale recording?", FD)
+        check("Replay", "RBAC-* recordings (pre-reasoning-fix) are skipped", "-", r.status_code == 503, r.status_code)
+        r = post(client, "/clinical/ask", "What is the cancellation fee?", FD)
+        check("Replay", "Front desk on /clinical/ask still 403", "BR-3", r.status_code == 403, r.status_code)
+        r = post(client, "/clinical/ask", "List all patients with diabetes.", CL).json()
+        check("Replay", "Replayed bulk refusal classified Denied", "BR-7", r["decision"] == "Denied", r["decision"])
+    finally:
+        config.REPLAY_MODE, config.REPLAY_DIR, replay._entries = False, config.REPORTS_DIR / "_cache", None
 
 
 def run():
@@ -173,6 +219,8 @@ def run():
               exists.status_code == missing.status_code == 403 and exists.json() == missing.json(), exists.json())
 
         check("Release health", "GET /release/health responds", "-", client.get("/release/health", headers=FD).status_code == 200)
+
+        run_replay(client)
 
         # --- Audit ------------------------------------------------------
         fd_audit = client.get("/audit", headers=FD).json()["entries"]

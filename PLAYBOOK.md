@@ -42,6 +42,16 @@ python smoke_backend.py
 The test lanes start uvicorn themselves if nothing is
 listening on 8003.
 
+To demo the web app without spending LLM budget (answers replayed from
+`reports/_cache/`; see README "Web app"):
+
+```bash
+python run_web.py
+```
+
+Then open http://127.0.0.1:8080. `python run_web.py --live` calls the model.
+Stop `run_web.py` before running the test lanes: both use port 8003.
+
 ## 2. Run v1 and freeze the baseline
 
 | Step | Command | Model calls (full set) |

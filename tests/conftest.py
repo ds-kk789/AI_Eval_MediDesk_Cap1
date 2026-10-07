@@ -55,6 +55,11 @@ def _probe():
 
     message = str(body.get("message", ""))
 
+    if body.get("mode") == "replay":
+        # Our app, but /ask replays recorded answers (run_web.py): grading
+        # it would only re-grade the recording.
+        return True, False, "MediDesk in replay mode (python run_web.py)"
+
     return True, APP_MARKER in message, message or "unknown app"
 
 
@@ -75,7 +80,7 @@ def live_api():
 
     if reachable and not is_ours:
         pytest.fail(
-            f"Port {config.PORT} is occupied by a different application "
+            f"Port {config.PORT} is occupied by an application the tests can't grade "
             f"({description!r}). Refusing to run: tests against the wrong "
             "app would report a meaningless pass. Stop that process, or set "
             "APP_PORT to a free port, then re-run."

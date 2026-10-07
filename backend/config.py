@@ -193,6 +193,13 @@ ALLOWED_ORIGINS = [
     if origin.strip()
 ]
 
+# Replay mode: /ask and /clinical/ask answer from the responses recorded by
+# the e2e run (reports/_cache) instead of calling the model, so the web app
+# can be demoed without LLM budget. Auth, the visibility re-check, the
+# decision label and the audit line still run for real (backend/replay.py).
+REPLAY_MODE = os.getenv("MEDIDESK_REPLAY", "").lower() in {"1", "true", "yes"}
+REPLAY_DIR = REPORTS_DIR / "_cache"
+
 
 # ------------------------------------------------------------
 # SAMPLING (LLM budget: ~30 calls/day)
